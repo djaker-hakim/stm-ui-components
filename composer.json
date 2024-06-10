@@ -1,0 +1,27 @@
+{
+    "name": "djaker-hakim/stm-ui-components",
+    "description": "premade blade components",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hakim",
+            "email": "hakiltheknight@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "stm\\UIcomponents\\": "src/"
+        }
+    },
+    "extra": {
+    "laravel": {
+        "providers": [
+            "stm\\UIcomponents\\UIcomponentsServiceProvider"
+            ]
+        }
+    }
+
+    
+}
