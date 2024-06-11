@@ -1,5 +1,5 @@
 {{-- COLLAPSE COMPONENT HAS 2 VARIBALES "ID", "STATE" THE ID IS A MUST IF YOU HAVE MULTIPLE COMPONENETS --}}
-{{-- TO HANDEL THE STATE MANUALLY BY USING ALPINEJS COLLAPSE VARIBLE --}}
+{{-- TO HANDEL THE STATE MANUALLY BY USING ALPINEJS USE "COLLAPSE" VARIBLE --}}
 
 @props([
     
@@ -10,7 +10,7 @@
 
 @pushOnce('scripts')
     <script>
-        function collapse(id, state)
+        function collapseFn(id, state)
         {
             return {
                 id: id,
@@ -26,7 +26,7 @@
 @endpushOnce
 
 <section 
-x-data="collapse('{{$id}}', @js($state))"
+x-data="collapseFn('{{$id}}', @js($state))"
 :id="id"
 x-on:collapse.window="collapseIt($event.detail.id)"
 {{ $attributes }}
