@@ -1,4 +1,5 @@
 {{-- NOTE: IN THE HEAD SLOT TRY NOT TO ADD BUTTON COMPONENT BECAUSE ITS ALREADY A BUTTON --}}
+{{-- try to add id to avoid any errors --}}
 
 @props(
 [
@@ -9,7 +10,7 @@
     'disabled' => false
 ])
 
-<x-collapse id="{{ $id }}" :state="$state"
+<x-stm::collapse id="{{ $id }}" :state="$state"
 {{ $attributes }}
 >
     <x-slot:btn>
@@ -51,4 +52,4 @@
     
     {{ $slot }}
 
-</x-collapse>
+</x-stm::collapse>

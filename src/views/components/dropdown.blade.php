@@ -24,15 +24,31 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
 @endphp
 @pushOnce('scripts')
     <script>
-        function dropdown(id, state)
+        function dropdownFn(id, state)
         {
             return {
                 drop: state,
                 id: id,
-                dropIt(id)
+                open(id)
                 {
                     this.drop = (this.id == id);
-                } 
+                },
+                close(id)
+                {
+                    (this.id == id) ? this.drop = false : '';
+                },
+                toggle(id)
+                {
+                    (this.id == id) ? this.drop = !this.collapse : '';
+                },
+                getState()
+                {
+                    return this.drop;
+                },
+                getId()
+                {
+                    return this.id;
+                }
             }
         }
     </script>
@@ -41,9 +57,12 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
 
 <section 
 class="relative"
-x-data="dropdown('{{$id}}', @js($state))"
+x-data="dropdownFn('{{$id}}', @js($state))"
 :id="id"
-x-on:drop.window="dropIt($event.detail.id)">
+x-on:open-dropdown.window="open($event.detail.id)"
+x-on:close-dropdown.window="close($event.detail.id)"
+x-on:toggle-dropdown.window="toggle($event.detail.id)"
+>
 
     <div class="inline-block" x-ref="btn">
         {{ $btn }}
@@ -55,7 +74,9 @@ x-on:drop.window="dropIt($event.detail.id)">
     x-show="drop"
     x-cloak 
     {{ $anchor }}
-    @if ($clickOutside) x-on:click.outside="drop = false" @endif
+    @if ($clickOutside) 
+        x-on:click.outside="close(id)" 
+    @endif
     {{ $attributes }}>
     
         {{ $slot }}

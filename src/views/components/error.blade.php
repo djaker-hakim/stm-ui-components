@@ -2,6 +2,7 @@
 
 @props([
     'message' => '',
+    'class' => 'text-red-500 text-xs m-0',
 ])
 @php
     $messages = [];
@@ -10,7 +11,7 @@
 
 
 @foreach($messages as $error)
-<div class="text-red-500 text-xs m-0">    
+<div class="{{ $class }}">    
     {{ $error }} 
 </div>
 @endforeach

@@ -17,54 +17,99 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- <link rel="icon" type="image/x-icon" href="" /> -->
     <title>test</title>
+    @stack('styles')
 </head>
-<body>
+<body class="relative">
+    <div class="sticky top-0 z-20">
+        <x-stm::navbar id="nav-bar" >
+            <x-slot:brand>
+                logo
+            </x-slot:brand>
+            <x-slot:nav-menu>
+                <p>home</p>
+                <p>shop</p>
+                <p>contact</p>
+            </x-slot:nav-menu>
+        </x-stm::navbar>
+    </div>
 
-    {{-- nav bar --}}
-    <nav x-data class="flex justify-between items-center px-5 sm:px-10 md:px-20 h-[50px] md:h-[70px] bg-gray-100 text-gray-700">
-        <div>
-            logo
-        </div>
-
-        <div>
-            <ul class="hidden md:flex gap-4">
-                <li>home</li> 
-                <x-stm::dropdown id="drop" position="bottom-end" :state="false">
-                    <x-slot:btn>
-                        <li x-on:click="drop = !drop">services</li>
-                    </x-slot:btn>
-                    <li>service1</li>
-                    <li>service2</li>
-                    <li>service3</li>
-                </x-dropdown>
-                <li>about us</li>
-                <li>contact us</li>
-            </ul>
-            <x-stm::button btn="icon" size="sm">icon</x-button>
-            
-        </div>
-    </nav>
-    <x-stm::collapse id="coll" class="bg-gray-100 text-gray-700 px-5 sm:px-10 md:px-20" >
-            <x-slot:btn>
-            </x-slot:btn>   
-
-        <ul class="space-y-2">
-            <li>home</li>
-            <x-stm::collapse id="collap" >
-                <x-slot:btn>
-                    <li x-on:click="collapse = !collapse">services</li>
-                </x-slot:btn>
-                <li>service1</li>
-                <li>service2</li>
-                <li>service3</li>
-            </x-collapse>
-            <li>about us</li>
-            <li>contact us</li>
-        </ul>
-                
-    </x-collapse>
+<div class="flex relative">
+    <div class="fixed top-[50px] left-0">
+    <x-stm::sidebar id="side-bar" 
+    :clickOutside="true" 
+    position="left"
+    :state="true"
+    class="bg-red-500 text-white border-r-4 border-green-500 fill-gray-700">
+        <x-slot:brand>
+            <div class="my-5">logo</div>
+        </x-slot:brand>
+        
+        <p><span>H</span> <span x-show="sidebar">home</span></p>
+        <p><span>C</span> <span x-show="sidebar">contact</span></p>
+        <template x-for="1 in 30">
+            <p><span>A</span> <span x-show="sidebar">about us</span></p>
+        </template>
+        
+    </x-stm::sidebar>
+    </div>
+    
     
 
-    @stack('scripts')
+    <main class="w-full bg-gray-100 px-20 h-[200vh] overflow-auto" x-data>
+        <h1>this is the main section</h1>
+        <div class="w-full flex justify-center mt-[300px]">
+            <x-button color="blue" text="text-white" x-on:click="$dispatch('toggle-sidebar', {id: 'side-bar'})">click</x-button>
+        </div>
+    </main>
+
+    <div class="fixed top-[50px] right-0">
+        <x-stm::sidebar id="side-bar-1" 
+        sidebar="expand" 
+        :clickOutside="false" 
+        position="right"
+        :state="true"
+        class="bg-red-500 text-white border-r-4 border-green-500 fill-gray-700">
+            <x-slot:brand>
+                <div class="my-5">logo</div>
+            </x-slot:brand>
+            
+            <p><span>H</span> <span x-show="sidebar">home</span></p>
+            <p><span>C</span> <span x-show="sidebar">contact</span></p>
+            <template x-for="1 in 30">
+                <p><span>A</span> <span x-show="sidebar">about us</span></p>
+            </template>
+            
+        </x-stm::sidebar>
+    </div>
+</div>
+    
+
+    @stack('scripts')  
 </body>
 </html>
+
+{{-- <section class="" x-data="{open : true}">
+    
+    <nav class="h-screen bg-gray-200 sticky top-0 py-10 transition-[border-radius_width] duration-500"
+        :class="open ? 'w-52 rounded-lg' : 'w-16 rounded-[40px] shadow-lg'"  
+        x-show=""
+        x-transition:enter="transition-[width]  duration-500"
+        x-transition:enter-start="w-20"
+        x-transition:enter-end="w-52"
+        x-transition:leave="transition-[width] w-20 duration-500"
+        >
+        <div class="z-10">
+            <x-stm::button btn="icon" x-on:click="open = true" x-show="!open">open</x-button>
+            <x-stm::button btn="icon" x-on:click="open = !open"> ret </x-button>
+        </div>
+
+        
+            <ul class="side overflow-y-auto overflow-x-hidden h-[500px]">
+                <li class="flex gap-4"><span>small</span><span x-show="true"> dashboard</span></li>
+                <template x-for="1 in 30">
+                    <li>page</li>
+                </template>
+            </ul>
+  
+    </nav>
+</section> --}}

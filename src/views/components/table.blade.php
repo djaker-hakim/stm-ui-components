@@ -1,6 +1,8 @@
+{{--  --}}
+
 @props([
     'headers',
-    'type' => '',
+    'table' => 'standard',
     'width' => '',
     'height' => '',
     'scrollable' => false,
@@ -13,7 +15,7 @@
 ])
 
 @php
-if(!($type == 'custom')){
+
     $dim = "";  $scroll ="";   $stick = "";
 
     if($width && $height) $dim = "block w-[$width] h-[$height]";
@@ -23,22 +25,30 @@ if(!($type == 'custom')){
         if($sticky) $stick = "sticky top-0";
     }
 
-    $tableClass = "my-4 relative $dim $scroll $tableClass";
-    $theadClass = "capitalize $theadClass $stick";
-    $tbodyClass = "leading-none $tbodyClass";
-}
+$tables= [
+    'custom' => (object) [
+        'tableClass' => "$tableClass",
+        'theadClass' => "$theadClass",
+        'tbodyClass' => "$tbodyClass"
+    ],
+    'standard' => (object) [
+        'tableClass' => "my-4 relative $dim $scroll $tableClass",
+        'theadClass' => "capitalize $stick $theadClass",
+        'tbodyClass' => "leading-none $tbodyClass"
+    ]
+];
 @endphp
 
 <div class="">
-<table class="{{ $tableClass }}">
-    <thead class="{{$theadClass}}">
+<table class="{{ $tables[$table]->tableClass }}">
+    <thead class="{{$tables[$table]->theadClass}}">
         <tr>
             @foreach ($headers as $header)                   
             <th class="px-4 py-2">{{ $header }}</th>        
             @endforeach
         </tr>
     </thead>
-    <tbody class="{{ $tbodyClass }}">
+    <tbody class="{{ $tables[$table]->tbodyClass }}">
         {{ $slot }}
     </tbody>
 </table>

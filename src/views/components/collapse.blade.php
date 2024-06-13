@@ -5,7 +5,6 @@
     
     'id' => 'collapse',
     'state' => false
-    
 ])
 
 @pushOnce('scripts')
@@ -15,10 +14,25 @@
             return {
                 id: id,
                 collapse : state,
-                collapseIt(id)
+                open(id)
+                {
+                    (this.id == id) ? this.collapse = true : '';
+                },
+                close(id)
+                {
+                    (this.id == id) ? this.collapse = false : '';
+                },
+                toggle(id)
                 {
                     (this.id == id) ? this.collapse = !this.collapse : '';
-
+                },
+                getState()
+                {
+                    return this.collapse;
+                },
+                getId()
+                {
+                    return this.id;
                 }
             }
         }
@@ -28,7 +42,9 @@
 <section 
 x-data="collapseFn('{{$id}}', @js($state))"
 :id="id"
-x-on:collapse.window="collapseIt($event.detail.id)"
+x-on:open-collapse.window="open($event.detail.id)"
+x-on:close-collapse.window="close($event.detail.id)"
+x-on:toggle-collapse.window="toggle($event.detail.id)"
 {{ $attributes }}
 >
     <div x-ref="btn">

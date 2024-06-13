@@ -1,18 +1,19 @@
+{{-- alerts : "danger", "info", "warning", "success", "default", "custom" --}}
+
 @props([
-    'type' => 'alert-default',
+    'alert' => 'default',
     'class' => ''
 ])
 
 @php
     $classes = [
-        'alert-danger' => 'bg-red-500 text-white',
-        'alert-info' => 'bg-sky-500 text-white',
-        'alert-warning' => 'bg-amber-500 text-white',
-        'alert-success' => 'bg-green-500 text-white',
-        'alert-default' => 'bg-gray-300 text-gray-800',
-        'alert-custom' => ''
+        'danger' => 'bg-red-500 text-white',
+        'info' => 'bg-sky-500 text-white',
+        'warning' => 'bg-amber-500 text-white',
+        'success' => 'bg-green-500 text-white',
+        'default' => 'bg-gray-300 text-gray-800',
+        'custom' => $class
     ];
-    $class ? $classes['alert-custom'] = $class : '';
 @endphp
 
 <section 
