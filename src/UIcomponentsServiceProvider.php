@@ -23,7 +23,7 @@ class UIcomponentsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/views', 'stm');
         Blade::componentNamespace('stm\\UIcomponents', 'stm');
         $this->publishes([
-            __DIR__.'/views/components' => resource_path('views/components/'),
+            __DIR__.'/views/stm-components' => resource_path('views/components/'),
         ]);
     }
 }
