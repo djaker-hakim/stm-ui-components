@@ -7,7 +7,7 @@
     'state' => false
 ])
 
-@pushOnce('scripts')
+@pushOnce('stm-scripts')
     <script>
         function collapseFn(id, state)
         {

@@ -12,7 +12,7 @@ EXEMPLE : $dispatch('show-notif', {id: 'notification-id'}) --}}
     ]
 )
 
-@pushOnce('scripts')
+@pushOnce('stm-scripts')
     <script>
         function notificationFn(id, state)
         {

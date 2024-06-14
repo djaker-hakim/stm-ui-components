@@ -21,9 +21,9 @@
     @stack('styles')
 </head>
 <body class="relative">
-    <x-stm::alert alert="warning">this is an alert</x-stm::alert>
+    <x-alert alert="warning">this is an alert</x-alert>
     <div class="sticky top-0 z-20">
-    <x-stm::navbar id="nav-bar">
+    <x-navbar id="nav-bar">
         <x-slot:brand>
             <img class="h-[40px]" src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" alt="">
         </x-slot:brand>
@@ -34,14 +34,14 @@
             <a class="block font-semibold hover:bg-green-100 px-3 py-1" href="#">About Us</a>
             <a class="block font-semibold hover:bg-green-100 px-3 py-1" href="#">Contact Us</a>
         </x-slot:nav-menu>
-    </x-stm::navbar>
+    </x-navbar>
 
 
-    <x-stm::sidebar id="side-bar" menuClass="h-[500px]" :state="false"
+    <x-sidebar id="side-bar" menuClass="h-[500px]" :state="false"
     :clickOutside="true"
     >
             
-        <x-stm::accordion id="acc-1" iconType="arrow" :state="true" 
+        <x-accordion id="acc-1" iconType="arrow" :state="true" 
         class="hover:bg-green-100 w-full"
         >
             <x-slot:head>
@@ -55,11 +55,11 @@
                 <li class="cursor-pointer hover:font-semibold">PHP</li>
             </ul>
             
-        </x-stm::accordion>
+        </x-accordion>
 
 
 
-        <x-stm::accordion id="acc-2" iconType="arrow" :state="true"
+        <x-accordion id="acc-2" iconType="arrow" :state="true"
         class="hover:bg-green-100 w-full"
         >
             <x-slot:head>
@@ -72,10 +72,10 @@
                 <li class="cursor-pointer hover:font-semibold">JAVASCRIPT</li>
             </ul>
             
-        </x-stm::accordion>
+        </x-accordion>
 
 
-        <x-stm::accordion id="acc-3" iconType="arrow" :state="true"
+        <x-accordion id="acc-3" iconType="arrow" :state="true"
         class="hover:bg-green-100 w-full"
         >
             <x-slot:head>
@@ -89,9 +89,9 @@
                 <li class="cursor-pointer hover:font-semibold">Angular</li>
             </ul>
             
-        </x-stm::accordion>
+        </x-accordion>
 
-        <x-stm::accordion id="acc-4" iconType="arrow" :state="true"
+        <x-accordion id="acc-4" iconType="arrow" :state="true"
         class="hover:bg-green-100 w-full"
         >
             <x-slot:head>
@@ -104,9 +104,9 @@
                 <li class="cursor-pointer hover:font-semibold">nodejs</li>
                 <li class="cursor-pointer hover:font-semibold">Go</li>
             </ul>
-        </x-stm::accordion>
+        </x-accordion>
         <div class="px-5 cursor-pointer hover:font-semibold">parameters</div>
-    </x-stm::sidebar>
+    </x-sidebar>
 </div>
     
 
@@ -116,54 +116,54 @@
     <section class="w-full" x-data>
 
         <div class="w-[95%] m-5 flex justify-end md:hidden" >
-            <x-stm::button btn="icon" x-on:click.stop="$dispatch('toggle-sidebar', {id: 'side-bar'})">sidebar</x-stm::button>
+            <x-button btn="icon" x-on:click.stop="$dispatch('toggle-sidebar', {id: 'side-bar'})">sidebar</x-button>
         </div>
         
         <form class="w-full p-5 space-y-4" action="">
             <div class="w-[50%]">
-                <x-stm::input  placeholder="Name" />
-                <x-stm::error :message="'incorrect name'" />
+                <x-input  placeholder="Name" />
+                <x-error :message="'incorrect name'" />
             </div>
             <div class="w-[50%]">
-                <x-stm::textarea rows="4" cols="30"></x-stm::textarea>
-                <x-stm::error :message="'incorrect name'" />
+                <x-textarea rows="4" cols="30"></x-textarea>
+                <x-error :message="'incorrect name'" />
             </div>
 
-            <x-stm::dropdown id="drop-1" position="bottom" :state="false"
+            <x-dropdown id="drop-1" position="bottom" :state="false"
             x-transition:enter="animate__animated animate__fadeIn [animation-duration:300ms]"
             x-transition:leave="animate__animated animate__fadeOut [animation-duration:300ms]"
             >
                 <x-slot:btn>
-                    <x-stm::button color="blue" text="text-white" x-on:click="toggle('drop-1')">choose</x-button>
+                    <x-button color="blue" text="text-white" x-on:click="toggle('drop-1')">choose</x-button>
                 </x-slot:btn>
                 <ul class="p-5 bg-gray-100 text-gray-700">
                     <li>option 1</li>
                     <li>option 2</li>
                     <li>option 3</li>
                 </ul>
-            </x-stm::dropdown>
+            </x-dropdown>
 
-            <x-stm::button x-on:click="$dispatch('toggle-model', {id: 'model-1'})" color="blue" text="text-white">model</x-stm::button>
+            <x-button x-on:click="$dispatch('toggle-model', {id: 'model-1'})" color="blue" text="text-white">model</x-button>
 
             <template x-teleport="body">
                 
-                    <x-stm::model id="model-1" :state="false" >
+                    <x-model id="model-1" :state="false" >
                         <div class="p-5">
                             <h1 class="text-2xl text-gray-700">test model</h1>
                             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam voluptatum inventore culpa corporis illo quisquam ipsa illum necessitatibus laborum ipsum?</p>
                         </div>
-                    </x-stm::model>
+                    </x-model>
                 
             </template>
 
-            <x-stm::button x-on:click="$dispatch('show-notif', {id: 'noti-1'})" color="blue" text="text-white">notify</x-stm::button>
-            <x-stm::notification id="noti-1" notification="info" :state="false">
+            <x-button x-on:click="$dispatch('show-notif', {id: 'noti-1'})" color="blue" text="text-white">notify</x-button>
+            <x-notification id="noti-1" notification="info" :state="false">
                 <p>this is a notification</p>
-            </x-stm::notification>
+            </x-notification>
 
-            <x-stm::spinner color="red" size="24" />
+            <x-spinner color="red" size="24" />
 
-            <x-stm::table :headers="['name', 'email', 'age']"
+            <x-table :headers="['name', 'email', 'age']"
             tableClass="block w-[300px] h-[100px]"
             theadClass="bg-blue-700 text-gray-100 text-start" 
             :scrollable="true"
@@ -176,7 +176,7 @@
                         <td class="text-center">30</td>
                     </tr>
                 </template>
-            </x-stm::table>
+            </x-table>
 
         
         </form>
@@ -187,6 +187,6 @@
     </main>
     
 
-    @stack('scripts')  
+    <x-stm::stm-scripts />
 </body>
 </html>

@@ -14,7 +14,7 @@ EVENTS: "open-navbar" "close-navbar" "toggle-navbar" with ID of the navbar --}}
 @php
     $collapseId = uniqid(); 
 @endphp
-@push('scripts')
+@push('stm-scripts')
     <script>
         function navbarFn(id, collapseId)
         {

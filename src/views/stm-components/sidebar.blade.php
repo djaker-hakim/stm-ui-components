@@ -51,7 +51,7 @@ EVENTS: "open-sidebar" "close-sidebar" "toggle-sidebar" with ID of the sidebar -
         ]
     ];   
 @endphp
-@pushOnce('scripts')
+@pushOnce('stm-scripts')
     <script>
         function sideBarFn(id, state){
             return {

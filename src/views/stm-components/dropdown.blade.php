@@ -22,7 +22,7 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
     $offset = trim($offset);
     $anchor = "x-anchor.offset.$offset.$position=".'$refs.btn';
 @endphp
-@pushOnce('scripts')
+@pushOnce('stm-scripts')
     <script>
         function dropdownFn(id, state)
         {

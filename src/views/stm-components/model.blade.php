@@ -10,7 +10,7 @@ EXEMPLE : $dispatch('open-model', {id: 'model-id'}), $dispatch('close-model', {i
     'clickOutside' => true 
 ])
 
-@pushOnce('scripts')
+@pushOnce('stm-scripts')
     <script>
         function model(id, state)
         {
