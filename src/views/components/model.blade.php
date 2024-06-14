@@ -48,7 +48,7 @@ EXEMPLE : $dispatch('open-model', {id: 'model-id'}), $dispatch('close-model', {i
     x-cloak
     x-on:open-model.window="open($event.detail.id)"
     x-on:close-model.window="close($event.detail.id)"
-    x-on:toggle-model.window="close($event.detail.id)"
+    x-on:toggle-model.window="toggle($event.detail.id)"
     class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black/30 ">
 
     <div 

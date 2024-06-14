@@ -1,4 +1,5 @@
-{{--  --}}
+{{-- headers is a array of headers --}}
+{{-- tables : "standard" "custom" --}}
 
 @props([
     'headers',

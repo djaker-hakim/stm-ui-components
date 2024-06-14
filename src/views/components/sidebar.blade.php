@@ -16,7 +16,8 @@ EVENTS: "open-sidebar" "close-sidebar" "toggle-sidebar" with ID of the sidebar -
     'transitionStart' => '',
     'clickOutside' => true,
     'position' => 'left',
-    'bp' => true
+    'bp' => true,
+    'menuClass' => 'h-[65vh]'
 ])
 @php
     $positionClasses = (object) [
@@ -44,7 +45,7 @@ EVENTS: "open-sidebar" "close-sidebar" "toggle-sidebar" with ID of the sidebar -
             'transitionEnd' => 'w-52'
         ],
         'standard' => (object) [
-            'class' => "w-52 absolute top-0 md:relative h-[calc(100vh-50px)] md:h-[calc(100vh-70px)] py-2 transition-[width] duration-500 overflow-hidden $class ".$positionClasses->$position->position,
+            'class' => "w-52 absolute top-0 md:relative h-[calc(100vh-50px)] md:h-[calc(100vh-70px)] py-2 overflow-hidden z-20 $class ".$positionClasses->$position->position,
             'transitionStart' => 'w-0',
             'transitionEnd' => 'w-52'
         ]
@@ -86,20 +87,20 @@ EVENTS: "open-sidebar" "close-sidebar" "toggle-sidebar" with ID of the sidebar -
     <nav class="{{ $sidebars->$sidebar->class }}"
     id="{{ $id }}"
     @if($bp)
-        x-init="window.innerWidth < 765 ? sidebar = false : ''"
+        x-init="window.innerWidth < 765 ? sidebar = false : sidebar = true"
     @endif
-    @if($con)
-        :class="sidebar ? '{{ $sidebars->$sidebar->transitionEnd }}' : '{{ $sidebars->$sidebar->transitionStart }}'"
-    @else
-    x-cloak
+    @if(!$con)
     x-show="sidebar"
+    x-cloak
     x-transition:enter="transition-[width] duration-500"
     x-transition:enter-start="{{ $sidebars->$sidebar->transitionStart }}"
     x-transition:enter-end="{{ $sidebars->$sidebar->transitionEnd }}"
-    x-transition:leave="transition-[width] {{ $sidebars->$sidebar->transitionStart }} duration-500"
+    x-transition:leave="transition-[width] duration-500 {{ $sidebars->$sidebar->transitionStart }}"
+    @else
+        :class="sidebar ? '{{ $sidebars->$sidebar->transitionEnd }}' : '{{ $sidebars->$sidebar->transitionStart }}'"
     @endif
     @if($clickOutside)
-    x-on:click.outside="close(id)"
+    x-on:click.outside="if(window.innerWidth < 765) close(id)"
     @endif
     x-on:open-sidebar.window="open($event.detail.id)"
     x-on:close-sidebar.window="close($event.detail.id)"
@@ -127,7 +128,7 @@ EVENTS: "open-sidebar" "close-sidebar" "toggle-sidebar" with ID of the sidebar -
             </div>
         @endif
 
-        <div class="side overflow-y-auto overflow-x-hidden h-[400px]">
+        <div class="side overflow-y-auto overflow-x-hidden {{ $menuClass }}">
             {{ $slot }}
         </div>
   

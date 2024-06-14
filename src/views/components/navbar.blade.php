@@ -23,15 +23,15 @@ EVENTS: "open-navbar" "close-navbar" "toggle-navbar" with ID of the navbar --}}
                 collapseId: collapseId,
                 open(id)
                 {
-                    this.id == id ? $dispatch('open-collapse', {id: this.collapseId}) : '';
+                    this.id == id ? this.$dispatch('open-collapse', {id: this.collapseId}) : '';
                 },
                 close(id)
                 {
-                    this.id == id ? $dispatch('close-collapse', {id: this.collapseId}) : '';
+                    this.id == id ? this.$dispatch('close-collapse', {id: this.collapseId}) : '';
                 },
                 toggle(id)
                 {
-                    this.id == id ? $dispatch('toggle-collapse', {id: this.collapseId}) : '';
+                    this.id == id ? this.$dispatch('toggle-collapse', {id: this.collapseId}) : '';
                 }
             }
         }    
@@ -46,7 +46,7 @@ EVENTS: "open-navbar" "close-navbar" "toggle-navbar" with ID of the navbar --}}
     x-on:close-navbar.window="close($event.detail.id)"
     x-on:toggle-navbar.window="toggle($event.detail.id)"
     @if($clickOutside)
-    x-on:click.outside="$dispatch('close-collapse', {id: '{{ $collapseId }}'})"
+    x-on:click.outside="if(window.innerWidth < 765) $dispatch('close-collapse', {id: '{{ $collapseId }}'})"
     @endif
     {{ $attributes }}
     >

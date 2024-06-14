@@ -17,99 +17,176 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- <link rel="icon" type="image/x-icon" href="" /> -->
     <title>test</title>
+    <style> [x-cloak] { display: none !important; } </style>
     @stack('styles')
 </head>
 <body class="relative">
+    <x-stm::alert alert="warning">this is an alert</x-stm::alert>
     <div class="sticky top-0 z-20">
-        <x-stm::navbar id="nav-bar" >
-            <x-slot:brand>
-                logo
-            </x-slot:brand>
-            <x-slot:nav-menu>
-                <p>home</p>
-                <p>shop</p>
-                <p>contact</p>
-            </x-slot:nav-menu>
-        </x-stm::navbar>
-    </div>
-
-<div class="flex relative">
-    <div class="fixed top-[50px] left-0">
-    <x-stm::sidebar id="side-bar" 
-    :clickOutside="true" 
-    position="left"
-    :state="true"
-    class="bg-red-500 text-white border-r-4 border-green-500 fill-gray-700">
+    <x-stm::navbar id="nav-bar">
         <x-slot:brand>
-            <div class="my-5">logo</div>
+            <img class="h-[40px]" src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" alt="">
         </x-slot:brand>
-        
-        <p><span>H</span> <span x-show="sidebar">home</span></p>
-        <p><span>C</span> <span x-show="sidebar">contact</span></p>
-        <template x-for="1 in 30">
-            <p><span>A</span> <span x-show="sidebar">about us</span></p>
-        </template>
-        
+
+        <x-slot:nav-menu>
+            <a class="block font-semibold hover:bg-green-100 px-3 py-1" href="#">Home</a>
+            <a class="block font-semibold hover:bg-green-100 px-3 py-1" href="#">Services</a>
+            <a class="block font-semibold hover:bg-green-100 px-3 py-1" href="#">About Us</a>
+            <a class="block font-semibold hover:bg-green-100 px-3 py-1" href="#">Contact Us</a>
+        </x-slot:nav-menu>
+    </x-stm::navbar>
+
+
+    <x-stm::sidebar id="side-bar" menuClass="h-[500px]" :state="false"
+    :clickOutside="true"
+    >
+            
+        <x-stm::accordion id="acc-1" iconType="arrow" :state="true" 
+        class="hover:bg-green-100 w-full"
+        >
+            <x-slot:head>
+                <div class="font-semibold hover:font-bold">dashboard</div>
+            </x-slot:head>
+
+            <ul class="m-2 ml-3 px-5 border-l border-gray-500">
+                <li class="cursor-pointer hover:font-semibold">HTML</li>
+                <li class="cursor-pointer hover:font-semibold">CSS</li>
+                <li class="cursor-pointer hover:font-semibold">JAVASCRIPT</li>
+                <li class="cursor-pointer hover:font-semibold">PHP</li>
+            </ul>
+            
+        </x-stm::accordion>
+
+
+
+        <x-stm::accordion id="acc-2" iconType="arrow" :state="true"
+        class="hover:bg-green-100 w-full"
+        >
+            <x-slot:head>
+                <div class="font-semibold hover:font-bold">Beginner</div>
+            </x-slot:head>
+
+            <ul class="m-2 ml-3 px-5 border-l border-gray-500">
+                <li class="cursor-pointer hover:font-semibold">HTML</li>
+                <li class="cursor-pointer hover:font-semibold">CSS</li>
+                <li class="cursor-pointer hover:font-semibold">JAVASCRIPT</li>
+            </ul>
+            
+        </x-stm::accordion>
+
+
+        <x-stm::accordion id="acc-3" iconType="arrow" :state="true"
+        class="hover:bg-green-100 w-full"
+        >
+            <x-slot:head>
+                <div class="font-semibold hover:font-bold">Front end</div>
+            </x-slot:head>
+
+            <ul class="m-2 ml-3 px-5 border-l border-gray-500">
+                <li class="cursor-pointer hover:font-semibold">React</li>
+                <li class="cursor-pointer hover:font-semibold">Vue</li>
+                <li class="cursor-pointer hover:font-semibold">Svelte</li>
+                <li class="cursor-pointer hover:font-semibold">Angular</li>
+            </ul>
+            
+        </x-stm::accordion>
+
+        <x-stm::accordion id="acc-4" iconType="arrow" :state="true"
+        class="hover:bg-green-100 w-full"
+        >
+            <x-slot:head>
+                <div class="font-semibold hover:font-bold">Back end</div>
+            </x-slot:head>
+
+            <ul class="m-2 ml-3 px-5 border-l border-gray-500">
+                <li class="cursor-pointer hover:font-semibold">php</li>
+                <li class="cursor-pointer hover:font-semibold">python</li>
+                <li class="cursor-pointer hover:font-semibold">nodejs</li>
+                <li class="cursor-pointer hover:font-semibold">Go</li>
+            </ul>
+        </x-stm::accordion>
+        <div class="px-5 cursor-pointer hover:font-semibold">parameters</div>
     </x-stm::sidebar>
-    </div>
-    
-    
-
-    <main class="w-full bg-gray-100 px-20 h-[200vh] overflow-auto" x-data>
-        <h1>this is the main section</h1>
-        <div class="w-full flex justify-center mt-[300px]">
-            <x-button color="blue" text="text-white" x-on:click="$dispatch('toggle-sidebar', {id: 'side-bar'})">click</x-button>
-        </div>
-    </main>
-
-    <div class="fixed top-[50px] right-0">
-        <x-stm::sidebar id="side-bar-1" 
-        sidebar="expand" 
-        :clickOutside="false" 
-        position="right"
-        :state="true"
-        class="bg-red-500 text-white border-r-4 border-green-500 fill-gray-700">
-            <x-slot:brand>
-                <div class="my-5">logo</div>
-            </x-slot:brand>
-            
-            <p><span>H</span> <span x-show="sidebar">home</span></p>
-            <p><span>C</span> <span x-show="sidebar">contact</span></p>
-            <template x-for="1 in 30">
-                <p><span>A</span> <span x-show="sidebar">about us</span></p>
-            </template>
-            
-        </x-stm::sidebar>
-    </div>
 </div>
+    
+
+    <main class="flex">
+        
+
+    <section class="w-full" x-data>
+
+        <div class="w-[95%] m-5 flex justify-end md:hidden" >
+            <x-stm::button btn="icon" x-on:click.stop="$dispatch('toggle-sidebar', {id: 'side-bar'})">sidebar</x-stm::button>
+        </div>
+        
+        <form class="w-full p-5 space-y-4" action="">
+            <div class="w-[50%]">
+                <x-stm::input  placeholder="Name" />
+                <x-stm::error :message="'incorrect name'" />
+            </div>
+            <div class="w-[50%]">
+                <x-stm::textarea rows="4" cols="30"></x-stm::textarea>
+                <x-stm::error :message="'incorrect name'" />
+            </div>
+
+            <x-stm::dropdown id="drop-1" position="bottom" :state="false"
+            x-transition:enter="animate__animated animate__fadeIn [animation-duration:300ms]"
+            x-transition:leave="animate__animated animate__fadeOut [animation-duration:300ms]"
+            >
+                <x-slot:btn>
+                    <x-stm::button color="blue" text="text-white" x-on:click="toggle('drop-1')">choose</x-button>
+                </x-slot:btn>
+                <ul class="p-5 bg-gray-100 text-gray-700">
+                    <li>option 1</li>
+                    <li>option 2</li>
+                    <li>option 3</li>
+                </ul>
+            </x-stm::dropdown>
+
+            <x-stm::button x-on:click="$dispatch('toggle-model', {id: 'model-1'})" color="blue" text="text-white">model</x-stm::button>
+
+            <template x-teleport="body">
+                
+                    <x-stm::model id="model-1" :state="false" >
+                        <div class="p-5">
+                            <h1 class="text-2xl text-gray-700">test model</h1>
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam voluptatum inventore culpa corporis illo quisquam ipsa illum necessitatibus laborum ipsum?</p>
+                        </div>
+                    </x-stm::model>
+                
+            </template>
+
+            <x-stm::button x-on:click="$dispatch('show-notif', {id: 'noti-1'})" color="blue" text="text-white">notify</x-stm::button>
+            <x-stm::notification id="noti-1" notification="info" :state="false">
+                <p>this is a notification</p>
+            </x-stm::notification>
+
+            <x-stm::spinner color="red" size="24" />
+
+            <x-stm::table :headers="['name', 'email', 'age']"
+            tableClass="block w-[300px] h-[100px]"
+            theadClass="bg-blue-700 text-gray-100 text-start" 
+            :scrollable="true"
+            :sticky="true"
+            >
+                <template x-for="1 in 30">
+                    <tr class="my-2">
+                        <td class="py-2">hakim</td>
+                        <td>hakim@mail.com</td>
+                        <td class="text-center">30</td>
+                    </tr>
+                </template>
+            </x-stm::table>
+
+        
+        </form>
+
+
+    </section>
+    
+    </main>
     
 
     @stack('scripts')  
 </body>
 </html>
-
-{{-- <section class="" x-data="{open : true}">
-    
-    <nav class="h-screen bg-gray-200 sticky top-0 py-10 transition-[border-radius_width] duration-500"
-        :class="open ? 'w-52 rounded-lg' : 'w-16 rounded-[40px] shadow-lg'"  
-        x-show=""
-        x-transition:enter="transition-[width]  duration-500"
-        x-transition:enter-start="w-20"
-        x-transition:enter-end="w-52"
-        x-transition:leave="transition-[width] w-20 duration-500"
-        >
-        <div class="z-10">
-            <x-stm::button btn="icon" x-on:click="open = true" x-show="!open">open</x-button>
-            <x-stm::button btn="icon" x-on:click="open = !open"> ret </x-button>
-        </div>
-
-        
-            <ul class="side overflow-y-auto overflow-x-hidden h-[500px]">
-                <li class="flex gap-4"><span>small</span><span x-show="true"> dashboard</span></li>
-                <template x-for="1 in 30">
-                    <li>page</li>
-                </template>
-            </ul>
-  
-    </nav>
-</section> --}}

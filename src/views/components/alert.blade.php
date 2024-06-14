@@ -17,7 +17,7 @@
 @endphp
 
 <section 
-class="relative block p-2 text-base leading-5 {{ $classes[trim($type)] }} rounded-lg"
+class="relative block p-1 text-base leading-5 {{ $classes[trim($alert)] }} rounded-lg"
 x-data="{ close: false }"
 x-show="!close"
 x-cloak
