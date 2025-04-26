@@ -19,17 +19,16 @@
     $colors = "focus:[border-color:$color]";
 
     $inputStyles = [
-        'custom' => '',
-        'stm' => "inline-block w-full border-b border-slate-700 bg-gray-100 $colors transition-colors",
-        'standard' => "inline-block w-full bg-gray-50 rounded-md focus:border-2 $colors focus:bg-gray-50 transition-colors",
+        'standard' => "inline-block w-full bg-gray-50 rounded-md focus:border-2 focus:[border-color:$color] focus:bg-gray-50 transition-colors $standard $sizes[$size] $class",
+        'stm' => "inline-block w-full border-b border-slate-700 bg-gray-100 focus:[border-color:$color] transition-colors $standard $sizes[$size] $class",
+        'custom' => $class,
     ];
 
     $fileStyles = [
         'custom' => '',
         'standard' => "inline-block w-full text-sm cursor-pointer file:cursor-pointer file:text-sm file:p-2 file:rounded-s-lg focus:outline-none file:border-none file:hover:opacity-80 file:font-medium bg-gray-50 rounded-lg border border-gray-100 file:bg-[$color] file:text-gray-100 transition-colors",
     ];
-    $class = "$standard $sizes[$size] $inputStyles[$input] $class";
-
+   
 @endphp
 
 
@@ -45,7 +44,7 @@
         <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
         </svg>
     
-        <input type="{{ $type }}" class="pl-10 {{ $class }}" {{ $attributes }}>
+        <input type="{{ $type }}" class="pl-10 {{ $inputStyles[$input] }}" {{ $attributes }}>
     </div>
 
 @elseif($type == 'radio')
@@ -78,6 +77,6 @@
         </label>
     </div>
 @else
-    <input type="{{ $type }}" class="{{ $class }}" {{ $attributes }}>
+    <input type="{{ $type }}" class="{{ $inputStyles[$input] }}" {{ $attributes }}>
 @endif
 

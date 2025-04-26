@@ -65,8 +65,8 @@
 
 
 
-<div id="{{ $id }}" class="{{ $paginationStyles[$pagination]['container'] }}" 
-    x-data="paginationFn('{{ $id }}', @js($config))">
+<div :id="id" class="{{ $paginationStyles[$pagination]['container'] }}" 
+    x-data="paginationFn(@js($id), @js($config))">
 
 
     <button class="{{ $paginationStyles[$pagination]['leftArrow'] }}" type="button" x-on:click="prev()">

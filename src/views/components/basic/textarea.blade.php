@@ -17,17 +17,16 @@
         'lg' => 'px-1 py-2 text-lg',
     ];
 
-    $colors = "focus:[border-color:$color]";
-
+    
     $inputStyles = [
-        'custom' => '',
-        'stm' => "inline-block w-full border-b border-slate-700 bg-gray-100 $colors transition-colors",
-        'standard' => "inline-block w-full bg-gray-50 rounded-md focus:border-2 $colors focus:bg-gray-50 transition-colors",
+        'standard' => "inline-block w-full bg-gray-50 rounded-md focus:border-2 focus:[border-color:$color] focus:bg-gray-50 transition-colors $standard $sizes[$size] $class",
+        'stm' => "inline-block w-full border-b border-slate-700 bg-gray-100 focus:[border-color:$color] transition-colors $standard $sizes[$size] $class",
+        'custom' => $class,
     ];
-    $class = "$standard $sizes[$size] $inputStyles[$textarea] $class";
+    
 
 @endphp
 
-<textarea class="{{ $class }}" {{ $attributes }}>
+<textarea class="{{ $inputStyles[$textarea] }}" {{ $attributes }}>
 {{ $slot }}
 </textarea>

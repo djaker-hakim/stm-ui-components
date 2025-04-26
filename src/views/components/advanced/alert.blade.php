@@ -11,17 +11,20 @@
 
 @php
     isset($config['state']) ? '' : ($config['state'] = true);
+
+    $standard = "relative block p-1 text-base leading-5 rounded-lg";
+
     $classes = [
-        'danger' => 'bg-red-500 text-white',
-        'info' => 'bg-sky-500 text-white',
-        'warning' => 'bg-amber-500 text-white',
-        'success' => 'bg-green-500 text-white',
-        'default' => 'bg-gray-300 text-gray-800',
+        'danger' => "bg-red-500 text-white $standared $class",
+        'info' => "bg-sky-500 text-white $standared $class",
+        'warning' => "bg-amber-500 text-white $standared $class",
+        'success' => "bg-green-500 text-white $standared $class",
+        'default' => "bg-gray-300 text-gray-800 $standared $class",
         'custom' => $class,
     ];
 @endphp
 
-<section class="relative block p-1 text-base leading-5 rounded-lg {{ $classes[trim($alert)] }} "     
+<section class="{{ $classes[$alert] }} "     
     x-data="alertFn(@js($id), @js($config))"
     x-show="state"
     x-cloak
