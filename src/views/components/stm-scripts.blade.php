@@ -1,1 +1,0 @@
-@stack('stm-scripts')
