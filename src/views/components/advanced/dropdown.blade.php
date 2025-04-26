@@ -77,9 +77,14 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
 @endPushOnce
 
 
-<section x-data="dropdownFn('{{ $id }}', @js($config))" :id="id" x-on:open-dropdown.window="open($event.detail.id)"
-    x-on:close-dropdown.window="close($event.detail.id)" x-on:toggle-dropdown.window="toggle($event.detail.id)"
-    x-show="drop" x-cloak {{ $anchor }} @if ($clickOutside) x-on:click.outside="close(id)" @endif
+<section x-data="dropdownFn('{{ $id }}', @js($config))" 
+    :id="id" 
+    x-on:open-dropdown.window="open($event.detail.id)"
+    x-on:close-dropdown.window="close($event.detail.id)" 
+    x-on:toggle-dropdown.window="toggle($event.detail.id)"
+    x-show="drop" 
+    x-cloak {{ $anchor }} 
+    @if ($clickOutside) x-on:click.outside="close(id)" @endif
     {{ $attributes }}>
     {{ $slot }}
 </section>
