@@ -21,7 +21,8 @@
             "stm\\UIcomponents\\UIcomponentsServiceProvider"
             ]
         }
+    },
+    "require": {
+        "mexitek/phpcolors": "dev-master"
     }
-
-    
 }

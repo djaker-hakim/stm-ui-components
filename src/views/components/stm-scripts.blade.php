@@ -26,20 +26,26 @@
 <script>
     window.$stm = {
         list: [],
-        register(t) {
-            this.list.push(t)
+        register(component) {
+            this.list.push(component)
         },
-        unregister(t) {
-            this.list = this.list.filter(i => i.id != t)
+        unregister(id) {
+            this.list = this.list.filter(item => item.id != id)
         },
-        component(t) {
-            return this.list.find(i => i.id == t)
+        component(id) {
+            return this.list.find(item => item.id == id)
         },
         allComponents() {
             return this.list
         },
-        test() {
-            alert("test")
+        open(id){
+            this.component(id).open();
+        },
+        close(id){
+            this.component(id).close();
+        },
+        toggle(id){
+            this.component(id).toggle();
         }
     };
 </script>
