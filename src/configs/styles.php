@@ -1,17 +1,18 @@
 <?php
 
 return array (
-  'theme' => 'standard',
-  'primary' => 'blue',
-  'secondary' => '#9333ea',
-  'accent' => '#fbbf24',
-  'text' => '#374151',
-  'bg-1' => '#f3f4f6',
-  'bg-2' => '#e5e7eb',
-  'header' => '#1f2937',
+  'theme' => 'stm',
+  'primary' => '#3b82f6',
+  'secondary' => '#64748b',
+  'accent' => '#10b981',
+  'text' => '#1f2937',
+  'bg-1' => '#ffffff',
+  'bg-2' => '#f9fafb',
+  'heading' => '#111827',
   'danger' => '#ef4444',
   'warning' => '#f59e0b',
   'success' => '#22c55e',
   'info' => '#3b82f6',
   'muted' => '#9ca3af',
+  'border' => '#94a3b8',
 );

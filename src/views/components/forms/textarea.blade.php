@@ -1,15 +1,22 @@
-{{-- it has a standerd cutomizations for more cutumizations better create own styled textarea --}}
-
 @props([
+    'type' => '',
     'size' => 'md',
-    'color' => 'blue',
-    'textarea' => 'standard',
+    'color' => 'var(--stm-ui-primary)',
     'class' => '',
+    'theme' => '',
 ])
+
 
 @php
 
-    $standard = 'focus:outline-none invalid:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed';
+use stm\UIcomponents\Support\Stm;
+use stm\UIcomponents\Support\Color;
+
+
+$colorFormat = Color::detectColorFormat($color);
+if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+
+    $standard = 'focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
 
     $sizes = [
         'sm' => 'px-1 py-1 text-sm',
@@ -18,15 +25,16 @@
     ];
 
     
-    $inputStyles = [
+    $textareas = [
         'standard' => "inline-block w-full bg-gray-50 rounded-md focus:border-2 focus:[border-color:$color] focus:bg-gray-50 transition-colors $standard $sizes[$size] $class",
         'stm' => "inline-block w-full border-b border-slate-700 bg-gray-100 focus:[border-color:$color] transition-colors $standard $sizes[$size] $class",
         'custom' => $class,
     ];
     
-
+$theme = $theme ? $theme : Stm::styles()->theme;
+$theme = array_key_exists($theme, $textareas) ? $theme : 'standard'; // theme fallback value
 @endphp
 
-<textarea class="{{ $inputStyles[$textarea] }}" {{ $attributes }}>
+<textarea class="{{ $textareas[$theme] }}" {{ $attributes }}>
 {{ $slot }}
 </textarea>
