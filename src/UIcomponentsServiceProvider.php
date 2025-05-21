@@ -20,10 +20,10 @@ class UIcomponentsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'stm');
-        Blade::componentNamespace('stm\\UIcomponents', 'stm');
-        $this->publishes([
-            __DIR__.'/views/stm-components' => resource_path('views/components/'),
-        ]);
+        $this->loadViewsFrom([
+            __DIR__.'/views', 
+            __DIR__.'/views/forms',
+            __DIR__.'/views/ui',
+        ], 'stm');
     }
 }
