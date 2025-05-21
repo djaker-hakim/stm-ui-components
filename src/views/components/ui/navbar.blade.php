@@ -5,37 +5,38 @@ EVENTS: "open-navbar" "close-navbar" "toggle-navbar" with ID of the navbar --}}
 {{-- clickOutside default is true --}}
 
 @props([
-    'id',
-    'navbar' => 'standard',
-    'backgroundColor' => 'gray',
-    'color' => 'black',
+    'theme' => '',
+    'color' => '',
+    'backgroundColor' => 'var(--stm-ui-bg-2)',
     'class' => '',
     'config' => [
         'sticky' => false,
     ]
 ])
 @php
-    isset($config['sticky']) ? '' : $config['sticky'] = false;
-    $config['sticky'] ? $stickyClass =  'sticky top-0' : $stickyClass = '';
-    $navbars = [
-        'standard' => [
-            'navContainer' => "flex justify-between items-center px-5 sm:px-10 md:px-20 max-h-[50px] md:max-h-[70px] bg-[$backgroundColor] text-[$color] $stickyClass $class",
-        ],
-        'custom' => [
-            'navContainer' => $class,
-        ],
-    ];
+use stm\UIcomponents\Support\Stm;
+use stm\UIcomponents\Support\Color;
 
-    $navbarContainer = $navbars[$navbar]['navContainer'];
+// default values
+$config['sticky'] ??= false;
+$stickyClass = $config['sticky'] ? 'sticky top-0' : '' ;
+
+$colorFormat = Color::detectColorFormat($color);
+if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+
+$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
+if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
+
+     
+    $navbars = [
+        'standard' => "flex justify-between items-center px-5 sm:px-10 md:px-20 max-h-[50px] md:max-h-[70px] bg-[$backgroundColor] text-[$color] $stickyClass $class",
+        'custom' => $class,
+    ];
+$theme = $theme ? $theme : Stm::styles()->theme;
+$theme = array_key_exists($theme, $navbars) ? $theme : 'standard'; // theme fallback value
 @endphp
 
-
-
-<nav x-data="navbarFn('{{$id}}')"
-    class="{{ $navbarContainer }}"
-    :id="id"
-    {{ $attributes }}
->
+<nav class="{{ $navbars[$theme] }}" {{ $attributes }}>
     <div {{ $start->attributes }}>
         {{ $start }}
     </div>
@@ -49,22 +50,3 @@ EVENTS: "open-navbar" "close-navbar" "toggle-navbar" with ID of the navbar --}}
     </div>
 </nav>
 
-
-@pushOnce('stm-scripts')
-    <script>
-        function navbarFn(id)
-        {
-            return {
-                id: id,
-                type: 'navbar',
-                init(){
-                    $stm.register(this);
-                },
-                getId()
-                {
-                    return this.id
-                }
-            }
-        }    
-    </script>    
-@endpushOnce

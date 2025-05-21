@@ -1,11 +1,11 @@
 @props([
     'id',
-    'pagination' => 'standard',
+    'theme' => '',
     'size' => 'md',
-    'color' => 'white',
-    'backgroundColor' => 'blue',
+    'color' => 'var(--stm-ui-bg-1)',
+    'backgroundColor' => 'var(--stm-ui-primary)',
     'config' => [
-        'pages' => 10,
+        'pages' => 100,
         'currentPage' => 1,
         'limit' => 5,
         'style' => [
@@ -19,16 +19,31 @@
     ])
 
 @php
+use stm\UIcomponents\Support\Stm;
+use stm\UIcomponents\Support\Color;
 
-    isset($config['pages']) ? '' : $config['pages'] = 0;
-    isset($config['currentPage']) ? '' : $config['currentPage'] = 1;
-    isset($config['limit']) ? '' : $config['limit'] = 5;
+//  default values
+    $config['pages'] ??= 0;
+    $config['currentPage'] ??= 1;
+    $config['limit'] ??= 5;
 
-    isset($config['style']['containerClass']) ? $containerClass=$config['style']['containerClass'] : $containerClass='' ;
-    isset($config['style']['itemClass']) ? $itemClass=$config['style']['itemClass'] : $itemClass='' ;
-    isset($config['style']['activeItemClass']) ? $activeItemClass=$config['style']['activeItemClass'] : $activeItemClass='';
-    isset($config['style']['leftArrowClass']) ? $leftArrowClass=$config['style']['leftArrowClass'] : $leftArrowClass='';
-    isset($config['style']['rightArrowClass']) ? $rightArrowClass=$config['style']['rightArrowClass'] : $rightArrowClass='';
+    $config['style']['containerClass'] ??= '';
+    $config['style']['itemClass'] ??= '';
+    $config['style']['activeItemClass'] ??= '';
+    $config['style']['leftArrowClass'] ??= '';
+    $config['style']['rightArrowClass'] ??= '';
+
+$colorFormat = Color::detectColorFormat($color);
+if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+
+$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
+if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
+
+    $containerClass = $config['style']['containerClass'];
+    $itemClass = $config['style']['itemClass'];
+    $activeItemClass = $config['style']['activeItemClass'];
+    $leftArrowClass = $config['style']['leftArrowClass'];
+    $rightArrowClass = $config['style']['rightArrowClass'];
        
 
     $sizes = [
@@ -39,17 +54,20 @@
 
     $sta ="text-center font-medium transition-all cursor-pointer";
     
-    $paginationStyles = [
+    $paginations = [
         'standard' => [
-            'container' => "flex",
-
-            'item' => "$sta border border-r-0 border-slate-300 shadow-sm hover:shadow-lg text-slate-600 hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size]",
-
-            'activeItem' => "text-[$color] bg-[$backgroundColor] border-[$backgroundColor]",
-
-            'leftArrow' => "rounded-md rounded-r-none border border-r-0 border-slate-300 shadow-sm hover:shadow-lg text-slate-600 hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size]",
-
-            'rightArrow' => "rounded-md rounded-l-none border border-slate-300 shadow-sm hover:shadow-lg text-slate-600 hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size]"
+            'container' => "flex $containerClass",
+            'item' => "$sta border border-r-0 border-slate-300 shadow-sm hover:shadow-lg  hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] $itemClass",
+            'activeItem' => "text-[$color] bg-[$backgroundColor] border-[$backgroundColor] $activeItemClass",
+            'leftArrow' => "rounded-md rounded-r-none border border-r-0 border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $leftArrowClass",
+            'rightArrow' => "rounded-md rounded-l-none border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $rightArrowClass"
+        ],
+        'stm' => [
+            'container' => "flex space-x-2 $containerClass",
+            'item' => "$sta border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] $itemClass",
+            'activeItem' => "text-[$color] bg-[$backgroundColor] border-[$backgroundColor] $activeItemClass",
+            'leftArrow' => "border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $leftArrowClass",
+            'rightArrow' => "border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $rightArrowClass"
         ],
         'custom' => [
             'container' => $containerClass,
@@ -60,37 +78,45 @@
         ]
     ];
 
-
+$theme = $theme ? $theme : Stm::styles()->theme;
+$theme = array_key_exists($theme, $paginations) ? $theme : 'standard'; // theme fallback value
 @endphp
 
 
 
-<div :id="id" class="{{ $paginationStyles[$pagination]['container'] }}" 
-    x-data="paginationFn(@js($id), @js($config))">
+<div :id="id" class="{{ $paginations[$theme]['container'] }}" 
+    x-data="paginationFn(@js($id), @js($config))"
+    {{ $attributes }}>
 
 
-    <button class="{{ $paginationStyles[$pagination]['leftArrow'] }}" type="button" x-on:click="prev()">
+    <button class="{{ $paginations[$theme]['leftArrow'] }}" type="button" x-on:click="prev()" :disabled="currentPage == 1" >
       <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
         </svg>
     </button>
 
-    
     <template x-if="start > 1">
-        <button class="{{ $paginationStyles[$pagination]['item'] }}" x-on:click="selectPage(start-1)">...</button>
+        <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(1)">1</button>
+    </template>
+    <template x-if="start > 1">
+        <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(start-1)">...</button>
     </template>
     
+    
     <template x-for="page in pages" :key="'index-'+page">
-        <button class="{{ $paginationStyles[$pagination]['item'] }}"
-        :class="currentPage == page ? '{{ $paginationStyles[$pagination]["activeItem"] }}' : ''"
+        <button class="{{ $paginations[$theme]['item'] }}"
+        :class="currentPage == page ? '{{ $paginations[$theme]["activeItem"] }}' : ''"
         x-text="page" x-on:click="selectPage(page)"></button>
     </template>
         
     <template x-if="end < totalPages">
-        <button class="{{ $paginationStyles[$pagination]['item'] }}" x-on:click="selectPage(end+1)">...</button>
+        <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(end+1)">...</button>
+    </template>
+    <template x-if="end < totalPages">
+        <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(totalPages)" x-text="totalPages"></button>
     </template>
    
-    <button class="{{ $paginationStyles[$pagination]['rightArrow'] }}" type="button" x-on:click="next()">
+    <button class="{{ $paginations[$theme]['rightArrow'] }}" type="button" x-on:click="next()" :disabled="currentPage == totalPages">
         <svg class="w-2.5 h-2.5 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
         </svg>
@@ -140,6 +166,14 @@
                         this.pages.push(i);
                     }
                     this.sendEvent();
+                },
+                setLimit(value){
+                    this.limit = value;
+                    this.visiblePages();
+                },
+                setTotalPages(value){
+                    this.totalPages = value;
+                    this.visiblePages();
                 },
                 sendEvent(){
                     this.$dispatch('change-page', { id: this.id, page: this.currentPage });

@@ -1,86 +1,78 @@
 {{-- ID is a must for toggleing the sidebar
 EVENTS: "open-sidebar" "close-sidebar" "toggle-sidebar" with ID of the sidebar --}}
 {{-- you can define the init state of sidebar with state var --}}
-{{-- you can choose defrent sidebars by choosing from : "standard", "expand", "custom" --}}
-{{-- by defining a class and transitionStart transitionEnd you can customize sidebar transition --}}
-{{-- you can choose the side for sidebar with position var "left" "right" --}}
-{{-- you can add or remove the breaking-point of the sidebar by the bp var : bool default "true"  --}}
+{{-- NOTE: if using btn outside make sure you stop propagation because it will make a conflic with clickOutside --}}
 
 
 @props([
     'id',
-    'sidebar' => 'standard',
+    'theme' => '',
+    'color' => '',
+    'backgroundColor' => 'var(--stm-ui-bg-2)',
     'class' => '',
-    'config' => [
-        'state' => true,
-        'maxWidth' => '200px',
-        'minWidth' => '0px',
-        'height' => 'calc(100vh-70px)',
-        'backgroundColor' => 'gray',
-        'position' => 'left',
-        'breakpoint' => [
-            'width' => 765,
-            'clickOutside' => true,
-        ]
-    ],
+    'config' => []
 ])
 
 
 @php
+use stm\UIcomponents\Support\Stm;
+use stm\UIcomponents\Support\Color;
 
-    isset($config['state']) ? '' : $config['state'] = true ;
-    isset($config['maxWidth']) ? '' : $config['maxWidth'] = '200px' ;
-    isset($config['minWidth']) ? '' : $config['minWidth'] = '0px' ;
-    isset($config['height']) ? '' : $config['height'] = 'calc(100vh-70px)';
-    isset($config['backgroundColor']) ? '' : $config['backgroundColor'] = 'gray';
-    isset($config['position']) ? '' : $config['position'] = 'left';
-    isset($config['breakpoint']['width']) ? '' : $config['breakpoint']['width'] = 765;
-    isset($config['breakpoint']['clickOutside']) ? '' : $config['breakpoint']['clickOutside'] = true;
+ //  default values
+$config['state'] ??= true ;
+$config['maxWidth'] ??= '200px' ;
+$config['minWidth'] ??= '0px' ;
+$config['height'] ??= '100dvh';
+$config['position'] ??= 'left';
+$config['breakpoint']['width'] ??= 765;
+$config['breakpoint']['clickOutside'] ??= true;
 
+$colorFormat = Color::detectColorFormat($color);
+if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+
+$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
+if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
+
+   
+
+$state= $config['state'];
+$height= $config['height'];
+$maxWidth = $config['maxWidth'];
+$minWidth = $config['minWidth'];
+$position= $config['position'];
+$clickOutside = $config['breakpoint']['clickOutside'];
+
+
+$positions=[
+    'left' => 'left-0',
+    'right' => 'right-0'
+];
+
+$heightClass="h-[$height]";
+$maxWidthClass="w-[$maxWidth]";
+$minWidthClass="w-[$minWidth]";
+
+$sidebars= [
+    'standard' => [
+        'container' => "absolute md:relative md:p-2 py-2 overflow-hidden z-10 transition-[width] duration-200 md:z-0 top-0 $heightClass $positions[$position] text-[$color] bg-[$backgroundColor] $class"
+    ],
+    'custom' => [
+        'container' => "$class",
+    ],
+];
     
+$number = (int)filter_var($minWidth, FILTER_SANITIZE_NUMBER_INT);
 
 
-    $state= $config['state'];
-    $height= $config['height'];
-    $maxWidth = $config['maxWidth'];
-    $minWidth = $config['minWidth'];
-    $position= $config['position'];
-    $backgroundColor = $config['backgroundColor'];
-    $clickOutside = $config['breakpoint']['clickOutside'];
-
-
-    $positions=[
-        'left' => 'left-0',
-        'right' => 'right-0'
-    ];
-
-    $heightClass="h-[$height]";
-    $maxWidthClass="w-[$maxWidth]";
-    $minWidthClass="w-[$minWidth]";
-
-    $backgroundColorClass = "bg-[$backgroundColor]";
-
-    $sidebars= [
-        'standard' => [
-            'container' => "absolute md:relative py-2 overflow-hidden z-10 bg-gray-200 transition-[width] duration-500 md:z-0 top-0 $maxWidthClass $heightClass $positions[$position] $backgroundColorClass $class"
-        ],
-        'custom' => [
-            'container' => "$class",
-        ],
-    ];
-    
-    $containerClass= $sidebars[$sidebar]['container'];
-    
-    
-    $number = (int)filter_var($minWidth, FILTER_SANITIZE_NUMBER_INT);
-
-    
+$theme = $theme ? $theme : Stm::styles()->theme;
+$theme = array_key_exists($theme, $sidebars) ? $theme : 'standard'; // theme fallback value
+   
 @endphp
 
 <section class="relative"> 
 <aside 
     x-data="sideBarFn('{{$id}}',  @js($config) )" 
-    class="{{ $containerClass }}" 
+    class="{{ $sidebars[$theme]['container'] }}"
     id="{{ $id }}"
     @if(!$state) x-cloak @endif
 @if($number > 0)

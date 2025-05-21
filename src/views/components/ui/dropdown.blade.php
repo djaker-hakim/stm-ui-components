@@ -11,6 +11,10 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
 
 @props([
     'id' => 'dropdown',
+    'theme' => '',
+    'color' => '',
+    'backgroundColor' => 'var(--stm-ui-bg-2)',
+    'class' => '',
     'config' => [
         'buttonId' => '',
         'state' => false,
@@ -20,53 +24,117 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
     ],
 ])
 @php
-    isset($config['state']) ? '' : ($config['state'] = false);
-    isset($config['position']) ? '' : ($config['position'] = 'bottom');
-    isset($config['offset']) ? '' : ($config['offset'] = '5');
-    isset($config['clickOutside']) ? '' : ($config['clickOutside'] = true);
+use stm\UIcomponents\Support\Stm;
+use stm\UIcomponents\Support\Color;
 
-    $position = trim($config['position']);
-    $offset = trim($config['offset']);
-    $clickOutside = $config['clickOutside'] ? true : false;
-    $anchor = "x-anchor.offset.$offset.$position=" . "document.getElementById('$config[buttonId]')";
+// default values
+$config['state'] ??= false;
+$config['position'] ??= 'bottom';
+$config['offset'] ??= '5';
+$config['clickOutside'] ??= true;
+
+
+// animations
+$config['animation'] ??= [];
+
+$no_animation = ($config['animation'] == 'none');
+if(!$no_animation){
+    $config['animation'] = []; // if other value then 'none'
+    $config['animation']['enter'] ??= 'fadeInDown';
+    $config['animation']['leave'] ??= 'fadeOutUp';
+    $config['animation']['duration'] ??= '200ms';
+
+    $animationEnter = 'animate__animated animate__'.$config['animation']['enter'];
+    $animationLeave = 'animate__animated animate__'.$config['animation']['leave'];
+    $duration = '[--animate-duration:'.$config['animation']['duration'].']';
+}
+
+
+$colorFormat = Color::detectColorFormat($color);
+if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+
+$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
+if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
+
+   
+
+$position = trim($config['position']);
+$offset = trim($config['offset']);
+$clickOutside = $config['clickOutside'] ? true : false;
+$anchor = "x-anchor.offset.$offset.$position=" . "document.getElementById('$config[buttonId]')";
+
+
+
+
+$dropdowns = [
+    'standard' => "p-2 shadow rounded-md bg-[$backgroundColor] text-[$color] $class",
+    'stm' => "p-2 shadow-md bg-[$backgroundColor] text-[$color] $class",
+    'custom' => $class
+];
+
+$theme = $theme ? $theme : Stm::styles()->theme;
+$theme = array_key_exists($theme, $dropdowns) ? $theme : 'standard'; // theme fallback value
+
 @endphp
+
+<section x-data="dropdownFn(@js($id), @js($config))"
+    class="{{ $dropdowns[$theme] }}"
+    :id="id" 
+    x-on:open-dropdown.window="open($event.detail.id)"
+    x-on:close-dropdown.window="close($event.detail.id)" 
+    x-on:toggle-dropdown.window="toggle($event.detail.id)"
+    x-show="state"
+    @if(!$no_animation)
+        x-transition:enter="{{ "$animationEnter $duration" }}"
+        x-transition:leave="{{ "$animationLeave $duration" }}"
+    @endif
+    x-cloak 
+    {{ $anchor }} 
+    @if ($clickOutside) x-on:click.outside="close(id)" @endif
+    {{ $attributes }}>
+    {{ $slot }}
+</section>
+
+
+
+
 @pushOnce('stm-scripts')
     <script>
         function dropdownFn(id, config) {
             return {
                 id: id,
                 type: 'dropdown',
-                drop: config.state,
+                state: config.state,
                 init() {
                     $stm.register(this);
                 },
                 open(id) {
                     if (id) {
-                        this.drop = (this.id == id);
+                        this.state = (this.id == id);
                     } else {
-                        this.drop = true;
+                        this.state = true;
                     }
 
                 },
                 close(id) {
                     if (id) {
                         (this.id == id) ?
-                        this.drop = false: '';
+                        this.state = false: '';
                     } else {
-                        this.drop = false;
+                        this.state = false;
                     }
 
                 },
                 toggle(id) {
                     if (id) {
-                        (this.id == id) ? this.drop = !this.drop: '';
+                        (this.id == id) ? this.state = !this.state: '';
                     } else {
-                        this.drop = !this.drop;
+                        this.state = !this.state;
                     }
 
                 },
                 getState() {
-                    return this.drop;
+                    return this.state;
                 },
                 getId() {
                     return this.id;
@@ -77,14 +145,4 @@ EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
 @endPushOnce
 
 
-<section x-data="dropdownFn('{{ $id }}', @js($config))" 
-    :id="id" 
-    x-on:open-dropdown.window="open($event.detail.id)"
-    x-on:close-dropdown.window="close($event.detail.id)" 
-    x-on:toggle-dropdown.window="toggle($event.detail.id)"
-    x-show="drop" 
-    x-cloak {{ $anchor }} 
-    @if ($clickOutside) x-on:click.outside="close(id)" @endif
-    {{ $attributes }}>
-    {{ $slot }}
-</section>
+

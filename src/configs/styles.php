@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'theme' => 'stm',
+  'theme' => 'standard',
   'primary' => '#3b82f6',
   'secondary' => '#64748b',
   'accent' => '#10b981',
