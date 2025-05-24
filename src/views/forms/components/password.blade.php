@@ -1,10 +1,23 @@
+{{-- 
+    attributes id, theme, color, size, class, config
+    id: for identifing the component API
+    size: sm, md, lg
+    class: for styling
+    config: array of state, showButton, style,
+    state: state of component
+    showButton: if you want the show button in the component
+    style: array of iconClass to style the button
+        
+    API: you can show or hide the password input by this methods
+    methods: show(), hide(), toggle();
+--}}
 @props([
-    'id',
+    'id' => '',
     'type' => '',
+    'theme' => '',
     'size' => 'md',
     'color' => 'var(--stm-ui-primary)',
     'class' => '',
-    'theme' => '',
     'config' => []
 ])
 
@@ -14,23 +27,25 @@ use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
 
+// default values 
 $config['state'] ??= false;
 $config['showButton'] ??= true;
 $config['style']['iconClass'] ??= '';
 
 $iconClass = $config['style']['iconClass'];
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$id = Stm::id($id, 'psswd-');
+$color = Color::colorToSnake($color);
 
-$standard = 'pr-8 focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
 
 $sizes = [
     'sm' => 'px-1 py-1 text-sm',
     'md' => 'px-1 py-1.5 text-base',
     'lg' => 'px-1 py-2 text-lg',
 ];
+if(!array_key_exists($size, $sizes)) $size = 'md';
 
+$standard = 'pr-8 focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
 
 $passwordInputs = [
     'standard' => [
@@ -47,12 +62,8 @@ $passwordInputs = [
     ]
 ];
 
-   
-
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $passwordInputs) ? $theme : 'standard'; // theme fallback value
-
-
 @endphp
 
 
@@ -73,33 +84,6 @@ $theme = array_key_exists($theme, $passwordInputs) ? $theme : 'standard'; // the
     </button>
 </div>
 
-@pushOnce('stm-scripts')
-
-<script>
-    function passwordFn(id, config){
-        return {
-            id: id,
-            type: 'password',
-            state: config.state,
-            showButton: config.showButton,
-            init(){
-                $stm.register(this);
-            },
-            show(){
-                this.state = true;
-            },
-            hide(){
-                this.state = false;
-            },
-            toggle(){
-                this.state = !this.state;
-            }
-        }
-    }
-</script>
-
-
-@endpushOnce
 
 
 

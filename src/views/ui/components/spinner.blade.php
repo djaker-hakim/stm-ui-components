@@ -1,5 +1,9 @@
-{{-- color, size for fast styling 
-class for more custom styling --}}
+{{-- 
+    attributes theme, color, size, class
+    color: component color
+    size: sm, md, lg, x% ex: 100px, 20rem ....
+    class: for styling
+--}}
 @props([
     'theme' => '',
     'color' => 'var(--stm-ui-primary)',
@@ -12,9 +16,7 @@ class for more custom styling --}}
 use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
-
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$color = Color::colorToSnake($color);
 
 $sizes = [
     'sm' => 'size-4',
@@ -31,8 +33,6 @@ $spinners = [
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $spinners) ? $theme : 'standard'; // theme fallback value
 @endphp
-
-
 
 <svg class="{{ $spinners[$theme] }}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path

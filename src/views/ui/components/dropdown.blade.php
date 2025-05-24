@@ -1,27 +1,38 @@
-{{-- POSITIONS: Bottom: bottom, bottom-start, bottom-end
+{{-- 
+    attributes id, theme, color, backgroundColor class, config
+    id: for identifing the component API
+    color: component color
+    backgroundColor: component background color
+    class: for styling
+    config: array of buttonId, state, position, offset, clickOutside, animation
+    buttonId: the button of the dropdown
+    state: state of component (bool)
+    positions: Bottom: bottom, bottom-start, bottom-end
                 Top: top, top-start, top-end
                 Left: left, left-start, left-end
-                Right: right, right-start, right-end --}}
-{{-- NOTE: IF YOUR POSITION DOES NOT WORK IT MEANS THERE IS NO SPACE SO IT FALL BACK TO THE OPTIMAL POSITION --}}
-{{-- OFFSET IS THE MARGIN OF THE DROP-ELEMENT --}}
-{{-- CLICK OUT SIDE BY DEFALT IT'S TRUE SO WHEN YOU CLICK OUTSIDE THE DROPDOWN WILL GO AWAY  --}}
-{{-- YOU CAN ADD x-transition OF YOUR CHOICE FOR ANIMATIONS --}}
-{{-- YOU CAN TRIGGER THE DROPDOWN WITH AN EVENT "drop" AND THE "ID" OTHE THE DROPDOWN
-EXEMPLE : $dispatch('drop', {id: 'dropdown-id'})  --}}
+                Right: right, right-start, right-end
+    offset: value offset of the button (number) default 5
+    clickOutside: option to be availibale or not (bool) default true
+    animation: none, array of enter, leave, duration
+        none: no animation;
+        enter: animation name ex: 'fadeInDown' . (from animate.css)
+        leave: animation name ex: 'fadeOutUp' . (from animate.css)
+        duration: animation duration ex: '300ms'
+    NOTE: in case of html attributes you can't add x-transition or x-transition.scale... you must add x-transition:enter="" (blade component limitation);
 
+    API: available methods: open(), close(), toggle()
+  
+    Events: open-dropdown, close-dropdown, toggle-dropdown
+    ex: dispatch('open-dropdown', {id: 'dropdown-1'}) 
+    NOTE: if you dispatch the event it should have the component id else it will broadcast to all components 
+--}}
 @props([
-    'id' => 'dropdown',
+    'id' => '',
     'theme' => '',
     'color' => '',
     'backgroundColor' => 'var(--stm-ui-bg-2)',
     'class' => '',
-    'config' => [
-        'buttonId' => '',
-        'state' => false,
-        'position' => '',
-        'offset' => '5',
-        'clickOutside' => true,
-    ],
+    'config' => [],
 ])
 @php
 use stm\UIcomponents\Support\Stm;
@@ -49,22 +60,15 @@ if(!$no_animation){
     $duration = '[--animate-duration:'.$config['animation']['duration'].']';
 }
 
+$id = Stm::id($id, 'dropdown-');
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
-
-$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
-if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
-
-   
+$color = Color::colorToSnake($color);
+$backgroundColor = Color::colorToSnake($backgroundColor);
 
 $position = trim($config['position']);
 $offset = trim($config['offset']);
 $clickOutside = $config['clickOutside'] ? true : false;
 $anchor = "x-anchor.offset.$offset.$position=" . "document.getElementById('$config[buttonId]')";
-
-
-
 
 $dropdowns = [
     'standard' => "p-2 shadow rounded-md bg-[$backgroundColor] text-[$color] $class",
@@ -74,7 +78,6 @@ $dropdowns = [
 
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $dropdowns) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 <section x-data="dropdownFn(@js($id), @js($config))"
@@ -94,55 +97,3 @@ $theme = array_key_exists($theme, $dropdowns) ? $theme : 'standard'; // theme fa
     {{ $attributes }}>
     {{ $slot }}
 </section>
-
-
-
-
-@pushOnce('stm-scripts')
-    <script>
-        function dropdownFn(id, config) {
-            return {
-                id: id,
-                type: 'dropdown',
-                state: config.state,
-                init() {
-                    $stm.register(this);
-                },
-                open(id) {
-                    if (id) {
-                        this.state = (this.id == id);
-                    } else {
-                        this.state = true;
-                    }
-
-                },
-                close(id) {
-                    if (id) {
-                        (this.id == id) ?
-                        this.state = false: '';
-                    } else {
-                        this.state = false;
-                    }
-
-                },
-                toggle(id) {
-                    if (id) {
-                        (this.id == id) ? this.state = !this.state: '';
-                    } else {
-                        this.state = !this.state;
-                    }
-
-                },
-                getState() {
-                    return this.state;
-                },
-                getId() {
-                    return this.id;
-                }
-            }
-        }
-    </script>
-@endPushOnce
-
-
-

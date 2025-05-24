@@ -1,3 +1,8 @@
+{{-- 
+    attributes theme, size, class
+    size: sm, md, lg, x% ex: 100px, 20rem ....
+    class: for styling
+--}}
 @props([
     'theme' => '',
     'size' => 'md',
@@ -22,11 +27,7 @@ $avatars = [
 
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $btns) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 
-<img
-    class="{{ $avatars[$theme] }}"
-    {{ $attributes }}
-    />
+<img class="{{ $avatars[$theme] }}" {{ $attributes }} />

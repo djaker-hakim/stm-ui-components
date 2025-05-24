@@ -1,3 +1,9 @@
+{{-- 
+    attributes: theme, color, size
+    size: sm, md, lg 
+    config: array of style
+    style: array of containerClass, lableClass, inputClass to style the checkbox
+--}}
 @props([
     'type' => '',
     'theme' => '',
@@ -21,21 +27,17 @@ $config['style']['containerClass'] ??= '';
 $config['style']['lableClass'] ??= '';
 $config['style']['inputClass'] ??= '';
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$color = Color::colorToSnake($color);
 
-
-
-$containerClass = $config['style']['containerClass'];
-$lableClass = $config['style']['lableClass'];
-$inputClass = $config['style']['inputClass'];
+// varibales from config
+extract($config['style']);
 
 $sizes = [
     'sm' => 20,
     'md' => 25,
     'lg' => 30,
 ];
-
+if(!array_key_exists($size, $sizes)) $size = 'md';
 
 $switches = [
     'standard' => [
@@ -50,10 +52,8 @@ $switches = [
     ]
 ];
 
-
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $switches) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 

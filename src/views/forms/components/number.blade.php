@@ -1,9 +1,15 @@
+{{-- 
+    attributes theme, color, size, class
+    size: sm, md, lg
+    color: component color
+    class: for styling
+--}}
 @props([
     'type' => '',
+    'theme' => '',
     'size' => 'md',
     'color' => 'var(--stm-ui-primary)',
     'class' => '',
-    'theme' => '',
 ])
 
 @php
@@ -11,19 +17,16 @@
 use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
-
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
-
-$standard = 'pr-8 focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
+$color = Color::colorToSnake($color);
 
 $sizes = [
     'sm' => 'px-1 py-1 text-sm',
     'md' => 'px-1 py-1.5 text-base',
     'lg' => 'px-1 py-2 text-lg',
 ];
+if(!array_key_exists($size, $sizes)) $size = 'md';
 
-$colors = "focus:[border-color:$color]";
+$standard = 'pr-8 focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
 
 $numberInputs = [
     'standard' => "inline-block w-full bg-[var(--stm-ui-bg-2)] rounded-md focus:border-2 focus:[border-color:$color] focus:bg-[var(--stm-ui-bg-2)] transition-colors $standard $sizes[$size] $class",
@@ -34,7 +37,6 @@ $numberInputs = [
 
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $numberInputs) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 <input type="number" class="{{ $numberInputs[$theme] }}" {{ $attributes }}>

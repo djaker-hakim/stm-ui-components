@@ -62,4 +62,18 @@
     body {
         color: var(--stm-ui-text);
     }
+
+    
+    /* animation section  */
+    @keyframes progress-bar {
+        0% {
+            left: -33%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+    .animate-progress-bar {
+        animation: progress-bar 1200ms infinite linear;
+    }
 </style>

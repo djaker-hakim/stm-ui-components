@@ -21,7 +21,10 @@ class Stm
         return static::$COLOR;
     }
 
-    
+    public static function id(string $id, string $prefix) : string {
+        if($id == '') return uniqid($prefix);
+        return $id;
+    }
     
    
     

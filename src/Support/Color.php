@@ -71,4 +71,11 @@ public static function convertColorToHex(string $color){
         return 'unknown';
     }
 
+    public static function colorToSnake(string $color) : string {
+        $colorFormat = self::detectColorFormat($color);
+        if(in_array($colorFormat, ['rgb', 'hsl', 'rgba'])){
+            return str_replace(' ', '_', trim($color));
+        }
+        return $color;
+    }
 }

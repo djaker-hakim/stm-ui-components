@@ -1,5 +1,16 @@
+{{-- 
+    attributes id, theme, color, size, class, message
+    id: for identifing the component API
+    size: sm, md, lg
+    class: for styling
+    message: for initial message befor the component renders
+    
+    API: you can set message or reset message by this methods
+    methods: setMessage(), reset()
+--}}
+
 @props([
-    'id',
+    'id' => '',
     'theme' => '',
     'color' => 'var(--stm-ui-danger)',
     'size' => 'md',
@@ -12,15 +23,16 @@
 use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
-
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$id = Stm::id($id, 'err-');
+$color = Color::colorToSnake($color);
 
 $sizes=[
     'sm' => 'text-xs',
     'md' => 'text-sm',
     'lg' => 'text-base', 
 ];
+
+if(!array_key_exists($size, $sizes)) $size = 'md';
 
 $errs = [
     'standard' => "text-[$color] $sizes[$size] $class",
@@ -35,27 +47,3 @@ $theme = array_key_exists($theme, $errs) ? $theme : 'standard'; // theme fallbac
 
 
 <div class="{{ $errs[$theme] }}" x-data="errorFn(@js($id), @js($message))" x-text="message"></div>
-
-
-
-@pushOnce('stm-scripts')
-<script>
-    function errorFn(id, message){
-        return {
-            id: id,
-            message: message,
-            init(){
-                $stm.register(this);
-            },
-            setMessage(message){
-                this.message = message;
-            },
-            reset(){
-                this.message = '';
-            }
-        }
-    }
-</script>
-
-
-@endpushOnce

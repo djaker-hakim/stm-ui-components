@@ -1,9 +1,11 @@
-{{-- ID is a must for toggleing the collapse menu of the nav-bar
-EVENTS: "open-navbar" "close-navbar" "toggle-navbar" with ID of the navbar --}}
-{{-- there is no option for a custom nav only add supported classes --}}
-{{-- bgcolor, color varibales of class names it uses tailwind class as default  --}}
-{{-- clickOutside default is true --}}
-
+{{-- 
+    attributes theme, color, backgroudColor, class, config
+    color: component color
+    backgroudColor: component backgroud color
+    class: for styling
+    config: array of sticky
+        sticky: option (bool) default false
+--}}
 @props([
     'theme' => '',
     'color' => '',
@@ -20,18 +22,15 @@ use stm\UIcomponents\Support\Color;
 // default values
 $config['sticky'] ??= false;
 $stickyClass = $config['sticky'] ? 'sticky top-0' : '' ;
+ 
+$color = Color::colorToSnake($color);
+$backgroundColor = Color::colorToSnake($backgroundColor);
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$navbars = [
+    'standard' => "flex justify-between items-center px-5 sm:px-10 md:px-20 max-h-[50px] md:max-h-[70px] bg-[$backgroundColor] text-[$color] $stickyClass $class",
+    'custom' => $class,
+];
 
-$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
-if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
-
-     
-    $navbars = [
-        'standard' => "flex justify-between items-center px-5 sm:px-10 md:px-20 max-h-[50px] md:max-h-[70px] bg-[$backgroundColor] text-[$color] $stickyClass $class",
-        'custom' => $class,
-    ];
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $navbars) ? $theme : 'standard'; // theme fallback value
 @endphp

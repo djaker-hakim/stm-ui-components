@@ -1,32 +1,47 @@
-{{-- alerts : "danger", "info", "warning", "success", "default", "custom" --}}
+{{-- 
+    attributes id, theme, color, config
+    id: for identifing the component API
+    config: array of state, position, style, animation
+    state: state of component
+    position: start, center, end 
+    style: array of containerClass, alertClass to style the alert
+    animation: none, array of enter, leave, duration
+        none: no animation;
+        enter: animation name ex: 'fadeInDown' . (from animate.css)
+        leave: animation name ex: 'fadeOutUp' . (from animate.css)
+        duration: animation duration ex: '300ms'
+    NOTE: in case of html attributes you can't add x-transition or x-transition.scale... you must add x-transition:enter="" (blade component limitation);
 
+    API: you can set the alert message and mode with this methods
+    methods: error(), warn(), success(), info(), setContent(), open(), close(), toggle(), openTmp()
+    set content with mode: error(), warn(), success(), info()
+    set dynamic mode: setContent(content, mode)
+    modes: error, warning, info, success
+    open or close the alert whith: open(), close(), toggle(), openTmp(duration) open temporerly (4s default)
+    
+    Events: open-alert, close-alert, toggle-alert
+    ex: dispatch('open-alert', {id: 'alert-1'}) 
+    NOTE: if you dispatch the event it should have the component id else it will broadcast to all components 
+--}}
 @props([
-    'id',
+    'id' => '',
     'theme' => '',
     'color' => '',
-    'config' => [
-        'state' => true,
-        'position' => '',
-        'mode' => 'error',
-        'style' => [
-            'ContainerClass' => '',
-            'alertClass' => '',
-        ]
-    ]
-    ])
+    'config' => []
+])
 
 @php
 use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
+// default values
 $config['state'] ??= true;
 $config['style']['containerClass']  ??= '';
 $config['style']['alertClass']  ??= '';
 $config['position'] ??= 'end';
 $config['content'] = $slot->toHtml();
 
-$position = $config['position'] ? $config['position'] : 'end';
-
+$position = $config['position'];
 $containerClass = $config['style']['containerClass'];
 $alertClass = $config['style']['alertClass'];
 
@@ -45,15 +60,17 @@ if(!$no_animation){
     $duration = '[--animate-duration:'.$config['animation']['duration'].']';
 }
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$id = Stm::id($id, 'alert-');
+$color = Color::colorToSnake($color);
 
 
-    $positions = [
-        'start' => 'top-[80px] left-[50px]',
-        'center' => 'top-[80px] right-1/2 translate-x-1/2',
-        'end' => 'top-[80px] right-[50px]',
-    ];
+$positions = [
+    'start' => 'top-[80px] left-[50px]',
+    'center' => 'top-[80px] right-1/2 translate-x-1/2',
+    'end' => 'top-[80px] right-[50px]',
+];
+if(!array_key_exists($position, $positions)) $position = 'end';
+
 
     $alerts = [
         'standard' => [
@@ -106,75 +123,3 @@ $theme = array_key_exists($theme, $alerts) ? $theme : 'standard'; // theme fallb
     
 </section>
 
-@pushOnce('stm-scripts')
-    <script>
-        function alertFn(id, config) {
-            return {
-                id: id,
-                type: 'alert',
-                state: config.state,
-                content: config.content,
-                mode: config.mode,
-                init() {
-                    $stm.register(this);
-                },
-                setContent(content, mode){
-                    this.mode = mode;
-                    this.content = content;
-                },
-                error(content){
-                    this.setContent(content, 'error');
-                    return this;
-                },
-                info(content){
-                    this.setContent(content, 'info');
-                    return this;
-                },
-                warn(content){
-                    this.setContent(content, 'warning');
-                    return this;
-                },
-                success(content){
-                    this.setContent(content, 'success');
-                    return this;
-                },
-                openTmp(duration = 4000){
-                    this.open()
-                    const alert = setTimeout(() => {
-                        this.close();
-                    }, duration);
-                },
-                open(id = '') {
-                    if (id) {
-                        this.id == id ? this.state = true : '';
-                    } else {
-                        this.state = true;
-                    }
-                },
-                close(id = '') {
-                    if (id) {
-                        this.id == id ? this.state = false : '';
-                    } else {
-                        this.state = false;
-                    }
-                },
-                toggle(id = '') {
-                    if (id) {
-                        this.id == id ? this.state = !this.state : '';
-                    } else {
-                        this.state = !this.state;
-                    }
-                },
-                getstate() {
-                    return this.state;
-                },
-                getId() {
-                    return this.id;
-                },
-                getType() {
-                    return this.type;
-                }
-            }
-        }
-    </script>
-@endpushOnce

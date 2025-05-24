@@ -1,3 +1,10 @@
+{{-- 
+    attributes theme, color, size, class
+    size: sm, md, lg
+    color: component color
+    class: for styling
+--}}
+
 @props([
     'type' => '',
     'theme' => '',
@@ -11,17 +18,17 @@
 use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
-
+$color = Color::colorToSnake($color);
 
 $standard = "disabled:opacity-60 file:disabled:hover:opacity-60 file:disabled:cursor-not-allowed disabled:cursor-not-allowed file:disabled:bg-[var(--stm-ui-muted)]";
 
 $sizes = [
-        'sm' => 'px-1.5 py-1.5 text-sm file:text-xs file:p-1.5',
-        'md' => 'px-1.5 py-2 text-base file:p-2 file:text-sm',
-        'lg' => 'px-1.5 py-2 text-lg file:text-base file:p-2',
+    'sm' => 'px-1.5 py-1.5 text-sm file:text-xs file:p-1.5',
+    'md' => 'px-1.5 py-2 text-base file:p-2 file:text-sm',
+    'lg' => 'px-1.5 py-2 text-lg file:text-base file:p-2',
 ];
+
+if(!array_key_exists($size, $sizes)) $size = 'md';
 
 
 $fileInputs = [

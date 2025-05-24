@@ -1,15 +1,13 @@
+{{-- 
+    attributes theme, color, config
+    config: array of style
+    style: array of containerClass, lableClass, inputClass, iconClass to style the radio
+--}}
 @props([
     'type' => '',
     'theme' => '',
-    'size' => 'md',
     'color' => 'var(--stm-ui-primary)',
-    'config' => [
-        'style' => [
-            'containerClass' => '',
-            'lableClass' => '',
-            'inputClass' => '',
-        ]
-    ]
+    'config' => []
 ])
 
 @php
@@ -22,13 +20,10 @@ $config['style']['lableClass'] ??= '';
 $config['style']['inputClass'] ??= '';
 $config['style']['iconClass'] ??= '';
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$color = Color::colorToSnake($color);
 
-$containerClass = $config['style']['containerClass'];
-$lableClass = $config['style']['lableClass'];
-$inputClass = $config['style']['inputClass'];
-$iconClass = $config['style']['iconClass'];
+// varibales from config
+extract($config['style']);
 
 $radios = [
     'standard' => [
@@ -47,7 +42,6 @@ $radios = [
 
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $radios) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 <div class="{{ $radios[$theme]['container'] }}">

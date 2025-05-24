@@ -1,23 +1,35 @@
-{{-- ID IS A MUST if using MULTIPLE MODEL COMPONENT --}}
-{{-- CLICK OUT SIDE BY DEFALT IT'S TRUE SO WHEN YOU CLICK OUTSIDE THE DROPDOWN WILL GO AWAY  --}}
-{{-- YOU CAN ADD x-transition OF YOUR CHOICE FOR ANIMATIONS --}}
-{{-- YOU CAN TRIGGER THE MODEL WITH AN EVENT "open-model", "close-model" AND THE "ID" OTHE THE DROPDOWN
-EXEMPLE : $dispatch('open-model', {id: 'model-id'}), $dispatch('close-model', {id: 'model-id'})  --}}
+{{-- 
+    attributes id, theme, color, backgroundColor class, config
+    id: for identifing the component API
+    color: component color
+    backgroundColor: component background color
+    class: for styling
+    config: array of state, clickOutside, backdrop, style, animation
+    state: state of component (bool) default false
+    clickOutside: option to be availibale or not (bool) default true
+    style: array of backdropClass
+        backdropClass: styling of the backdrop
+    animation: none, array of enter, leave, duration
+    none: no animation;
+    enter: animation name ex: 'fadeInUp' . (from animate.css)
+    leave: animation name ex: 'fadeOutDown' . (from animate.css)
+    duration: animation duration ex: '200ms'
+    NOTE: in case of html attributes you can't add x-transition or x-transition.scale... you must add x-transition:enter="" (blade component limitation);
 
+    API: you can set the modal state with this methods
+    methods: open(), close(), toggle()
+  
+    Events: open-modal, close-modal, toggle-modal
+    ex: dispatch('open-modal', {id: 'modal-1'}) 
+    NOTE: if you dispatch the event it should have the component id else it will broadcast to all components 
+--}}
 @props([
     'id',
     'theme' => '',
     'color' => '',
     'backgroundColor' => 'var(--stm-ui-bg-1)',
     'class' => '',
-    'config' => [
-        'state' => false,
-        'clickOutside' => true,
-        'backdrop' => 'dark',
-        'style' => [
-            'backdropClass' => '',
-        ]
-    ],
+    'config' => [],
 ])
 
 @php
@@ -50,11 +62,10 @@ if(!$no_animation){
     $duration = '[--animate-duration:'.$config['animation']['duration'].']';
 }
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+$id = Stm::id($id, 'modal-');
 
-$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
-if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
+$color = Color::colorToSnake($color);
+$backgroundColor = Color::colorToSnake($backgroundColor);
 
 $backdrops = [
     'dark' => 'bg-black/30',
@@ -62,6 +73,7 @@ $backdrops = [
     'blur' => 'backdrop-blur-sm',
     'none' => '',
 ];
+if(!array_key_exists($backdrop, $backdrops)) $backdrop = 'dark';
 
 $modals = [
     'standard' => [
@@ -77,7 +89,6 @@ $modals = [
         'modal' => $class,
     ]
 ]; 
-
 
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $modals) ? $theme : 'standard'; // theme fallback value

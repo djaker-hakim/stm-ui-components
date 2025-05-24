@@ -1,8 +1,11 @@
-
+{{-- 
+    attributes: theme, color 
+    config: array of style
+    style: array of containerClass, lableClass, inputClass, iconClass to style the checkbox
+--}}
 @props([
     'type' => '',
     'theme' => '',
-    'size' => 'md',
     'color' => 'var(--stm-ui-primary)',
     'config' => []
 ])
@@ -18,14 +21,11 @@ $config['style']['inputClass'] ??= '';
 $config['style']['iconClass'] ??= '';
 
 
+$color = Color::colorToSnake($color);
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
+// varibales from config
+extract($config['style']);
 
-$containerClass = $config['style']['containerClass'];
-$lableClass = $config['style']['lableClass'];
-$inputClass = $config['style']['inputClass'];
-$iconClass = $config['style']['iconClass'];
 
 $checkboxes = [
     'standard' => [
@@ -42,11 +42,8 @@ $checkboxes = [
     ]
 ];
 
-
-
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $checkboxes) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 

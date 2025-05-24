@@ -1,9 +1,14 @@
+{{-- 
+    attributes: theme, color, size, config
+    config: array of style
+    style: array of containerClass, inputClass, iconClass to style the search
+--}}
+
 @props([
     'type' => '',
     'theme' => '',
     'size' => 'md',
     'color' => 'var(--stm-ui-primary)',
-    'class' => '',
     'config' => []
 ])
 
@@ -14,29 +19,23 @@ use stm\UIcomponents\Support\Stm;
 use stm\UIcomponents\Support\Color;
 
 //  default values
-
 $config['style']['containerClass'] ??= '';
 $config['style']['inputClass'] ??= '';
 $config['style']['iconClass'] ??= '';
 
+// varibales from config
+extract($config['style']);
 
-$containerClass = $config['style']['containerClass'];
-$inputClass = $config['style']['inputClass'];
-$iconClass = $config['style']['iconClass'];
-
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
-
-
-$standard = 'focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed pl-10';
+$color = Color::colorToSnake($color);
 
 $sizes = [
     'sm' => 'px-1 py-1 text-sm',
     'md' => 'px-1 py-1.5 text-base',
     'lg' => 'px-1 py-2 text-lg',
 ];
+if(!array_key_exists($size, $sizes)) $size = 'md';
 
-$colors = "focus:[border-color:$color]";
+$standard = 'focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed pl-10';
 
 $searchInputs = [
     'standard' => [
@@ -59,12 +58,11 @@ $searchInputs = [
 
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $searchInputs) ? $theme : 'standard'; // theme fallback value
-
 @endphp
 
 <div class="{{ $searchInputs[$theme]['container'] }}">
     <span class="{{ $searchInputs[$theme]['icon'] }}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" >
             <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
         </svg>  
     </span>

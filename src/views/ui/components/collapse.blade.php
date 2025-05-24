@@ -1,13 +1,26 @@
-{{-- COLLAPSE COMPONENT HAS 2 VARIBALES "ID", "STATE" THE ID IS A MUST IF YOU HAVE MULTIPLE COMPONENETS --}}
-{{-- TO HANDEL THE STATE MANUALLY BY USING ALPINEJS USE "COLLAPSE" VARIBLE --}}
-
+{{-- 
+    attributes id, theme, color, backgroundColor class, config
+    id: for identifing the component API
+    color: component color
+    backgroundColor: component background color
+    class: for styling
+    config: array of state
+    state: state of component
+    
+    API: you can set the collapse state this methods
+    methods: open(), close(), toggle()
+  
+    Events: open-collapse, close-collapse, toggle-collapse
+    ex: dispatch('open-collapse', {id: 'collapse-1'}) 
+    NOTE: if you dispatch the event it should have the component id else it will broadcast to all components 
+--}}
 @props([
-    'id',
+    'id' => '',
     'theme' => '',
     'color' => '',
     'backgroundColor' => 'var(--stm-ui-bg-2)',
     'class' => '',
-    'config' => ['state' => false],
+    'config' => [],
 ])
 
 @php
@@ -17,13 +30,10 @@ use stm\UIcomponents\Support\Color;
 // default values
 $config['state'] ??= false;
 
+$id = Stm::id($id, 'collapse-');
 
-$colorFormat = Color::detectColorFormat($color);
-if($colorFormat == 'rgb' || 'hsl' || 'rgba' ) $color = str_replace(' ', '_', trim($color));
-
-$backgroundColorFormat = Color::detectColorFormat($backgroundColor);
-if($backgroundColorFormat == 'rgb' || 'hsl' || 'rgba' ) $backgroundColor = str_replace(' ', '_', trim($backgroundColor));
-
+$color = Color::colorToSnake($color);
+$backgroundColor = Color::colorToSnake($backgroundColor);
 
 $collapses = [
     'standard' => "p-2 bg-[$backgroundColor] text-[$color] $class",
@@ -31,11 +41,8 @@ $collapses = [
     'custom' => "$class"
 ];
 
-
 $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $collapses) ? $theme : 'standard'; // theme fallback value
-
-
 @endphp
 
 
@@ -52,49 +59,3 @@ x-collapse
 {{ $attributes }}>
     {{ $slot }}
 </section>
-
-
-@pushOnce('stm-scripts')
-    <script>
-        function collapseFn(id, config) {
-            return {
-                id: id,
-                type: 'collapse',
-                state: config.state,
-                init() {
-                    $stm.register(this);
-                },
-                open(id = '') {
-                    if (id) {
-                        (this.id == id) ?
-                        this.state = true: '';
-                    } else {
-                        this.state = true;
-                    }
-
-                },
-                close(id) {
-                    if (id) {
-                        (this.id == id) ? this.state = false: '';
-                    } else {
-                        this.state = false;
-                    }
-
-                },
-                toggle(id) {
-                    if (id) {
-                        (this.id == id) ? this.state = !this.state: '';
-                    } else {
-                        this.state = !this.state;
-                    }
-                },
-                getState() {
-                    return this.state;
-                },
-                getId() {
-                    return this.id;
-                }
-            }
-        }
-    </script>
-@endpushOnce
