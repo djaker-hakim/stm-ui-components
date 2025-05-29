@@ -101,7 +101,7 @@ $theme = array_key_exists($theme, $paginations) ? $theme : 'standard'; // theme 
     <template x-if="start > 1">
         <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(1)">1</button>
     </template>
-    <template x-if="start > 1">
+    <template x-if="start > 2">
         <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(start-1)">...</button>
     </template>
     
@@ -112,7 +112,7 @@ $theme = array_key_exists($theme, $paginations) ? $theme : 'standard'; // theme 
         x-text="page" x-on:click="selectPage(page)"></button>
     </template>
         
-    <template x-if="end < totalPages">
+    <template x-if="end < totalPages - 1">
         <button class="{{ $paginations[$theme]['item'] }}" x-on:click="selectPage(end+1)">...</button>
     </template>
     <template x-if="end < totalPages">

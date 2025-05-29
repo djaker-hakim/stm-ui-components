@@ -466,6 +466,7 @@
                 sortProps: {},
                 cardHeader: [],
                 headers: {},
+                allHeaders: {},
                 init(){
                     $stm.register(this);
                     this.selectable = config.selectable;
@@ -474,13 +475,44 @@
                     this.setupData(data);
                 },
                 setupData(rows){
-                    if(rows.length > 0 || Object.keys(config.table.headers).length > 0){
-                        Object.keys(config.table.headers).length > 0 ? this.headers = config.table.headers : Object.keys(rows[0]).map(key => this.headers[key] = key);                               
-                        let obj = Object.keys(config.card.cardHeader).length > 0 ? config.card.cardHeader : this.headers;
-                        this.cardHeader.push(Object.keys(obj)[0]);
-                        this.cardHeader.push(Object.values(obj)[0]);
-                        this.sortProps.unsortedRows = rows.slice();
-                        this.rows = rows.slice();
+                    this.sortProps.unsortedRows = rows.slice();
+                    this.rows = rows.slice();
+                    this.setDefaultHeaders(rows);
+                    this.setHeaders(config.table.headers);
+                    this.setCardHeader(config.table.headers);
+                },
+                setDefaultHeaders(rows){
+                    // set up all headers
+                    if(rows.length > 0){
+                        Object.keys(rows[0]).map(key => this.allHeaders[key] = key);
+                        return;
+                    }
+                    this.allHeaders = {};                   
+                },
+                setHeaders(headers){
+                    // set custom headers
+                    if(Object.keys(headers).length > 0){
+                        this.headers = this.headerValidation(headers) ? headers : this.allHeaders ;
+                        return
+                    }
+                    // set default headers
+                    this.headers = this.allHeaders;
+                },
+                setCardHeader(header){
+                    if(Object.keys(header).length > 0){
+                        let obj = this.headerValidation(header) ? header : this.headers;
+                        this.cardHeader = [];
+                        this.cardHeader.push(Object.keys(obj)[0], Object.values(obj)[0]);
+                    }
+                },
+                headerValidation(headers){
+                    let obj = Object.keys(headers)
+                    let result = true;
+                    if(obj.length > 0){
+                        obj.forEach((key) => {
+                            result &&= Object.keys(this.allHeaders).includes(key);    
+                        })
+                        return result;
                     }
                 },
                 removeSelect(){

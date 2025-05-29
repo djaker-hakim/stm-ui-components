@@ -87,8 +87,8 @@ $lightColor = Color::colorToSnake($lightColor);
     // Card classes Setup
     extract($config['card']['style']);
     // Table Varibales Setup
-    $width = $config['table']['style']['width'] ? "w-[$config[table][style][width]]" : '';
-    $height = $config['table']['style']['height'] ? "h-[$config[table][style][height]]" : '';
+    $width = $config['table']['style']['width'] ? "w-[".$config['table']['style']['width']."]" : '';
+    $height = $config['table']['style']['height'] ? "h-[".$config['table']['style']['height']."]" : '';
     $sticky = $config['table']['style']['stickyHeader'] ? "sticky top-0 z-10" : '';
     $hover = $config['table']['style']['hoverable'] ? "hover:bg-[$lightColor] cursor-pointer" : '';
     $striped = $config['table']['style']['striped'] ? "even:bg-[$lightColor]" : '';
@@ -275,7 +275,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
                             </span>
                             <span x-text="row[cardHeader[0]]"></span>
                         </div>
-                        <div x-show="open" x-collapse class="mt-2">
+                        <div x-show="open" x-collapse.min.1px class="mt-2">
                             <template x-for="(header, key) in headers" :key="'header' + key">
                                 <div class="{{ $mTables[$theme]['card'] }}">
                                     <span class="{{ $mTables[$theme]['ch'] }}" x-text="header+':'"></span>
