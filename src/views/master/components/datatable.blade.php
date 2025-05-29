@@ -27,10 +27,10 @@
             </x-stm::button>
             <x-stm::dropdown id="drop" :config="[ 'buttonId' => 'cols' ]">
             <div class="space-y-1">
-                <template x-for="(head, index) in table.headers" :key="'index-'+ index">
+                <template x-for="(head, key) in table.allHeaders" :key="'index-'+ key">
 
                     <div class="w-40 p-1 rounded-sm flex gap-2 justify-start items-center hover:bg-gray-200">
-                        <x-stm::checkbox :config="['style' => ['inputClass' => 'bg-white']]" />
+                        <x-stm::checkbox ::checked="Object.keys(table.headers).include(key)" :config="['style' => ['inputClass' => 'bg-white']]" />
                         <label x-text="head"></label>
                     </div>
                         
@@ -62,9 +62,8 @@
             return {
                 id: id,
                 type:'datatable',
-                table: {headers: [],},
+                table: {allHeaders: {}, headers: {}},
                 pagination: null,
-                headers: [],
                 init(){
                     this.$nextTick(() => { 
                        this.table = $stm.component('table-data');
