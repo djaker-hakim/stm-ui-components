@@ -24,6 +24,7 @@ class UIcomponentsServiceProvider extends ServiceProvider
             __DIR__.'/views', 
             __DIR__.'/views/forms',
             __DIR__.'/views/ui',
+            __DIR__.'/views/master',
         ], 'stm');
     }
 }
