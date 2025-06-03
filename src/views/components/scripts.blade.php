@@ -314,18 +314,21 @@
                 next(){
                     if(this.currentPage < this.totalPages){
                         this.currentPage++;
-                        this.visiblePages();  
+                        this.visiblePages();
+                        this.sendEvent(); 
                     }
                 },
                 prev(){
                     if(this.currentPage > 1){
                         this.currentPage--;
                         this.visiblePages();
+                        this.sendEvent();
                     }
                 },
                 selectPage(page){
                     this.currentPage = page;
                     this.visiblePages();
+                    this.sendEvent();
                 },
                 visiblePages(){
                     this.pages = [];
@@ -335,7 +338,6 @@
                     for(let i = this.start; i <= this.end; i++){
                         this.pages.push(i);
                     }
-                    this.sendEvent();
                 },
                 setLimit(value){
                     this.limit = value;
