@@ -468,18 +468,21 @@
                 headers: {},
                 allHeaders: {},
                 init(){
-                    $stm.register(this);
                     this.selectable = config.selectable;
                     this.selectAllBtn = config.selectAllBtn;
                     this.sortable = config.sortable;
                     this.setupData(data);
+                    $stm.register(this);
                 },
                 setupData(rows){
-                    this.sortProps.unsortedRows = rows.slice();
-                    this.rows = rows.slice();
                     this.setDefaultHeaders(rows);
                     this.setHeaders(config.table.headers);
                     this.setCardHeader(config.table.headers);
+                    this.setData(rows);
+                },
+                setData(rows){
+                    this.sortProps.unsortedRows = rows.slice();
+                    this.rows = rows.slice();
                 },
                 setDefaultHeaders(rows){
                     // set up all headers
@@ -492,28 +495,22 @@
                 setHeaders(headers){
                     // set custom headers
                     if(Object.keys(headers).length > 0){
-                        this.headers = this.headerValidation(headers) ? headers : this.allHeaders ;
+                        this.headers = headers ;
                         return
                     }
                     // set default headers
                     this.headers = this.allHeaders;
                 },
                 setCardHeader(header){
+                    this.cardHeader = [];
+                    let obj = this.headers;
                     if(Object.keys(header).length > 0){
-                        let obj = this.headerValidation(header) ? header : this.headers;
-                        this.cardHeader = [];
+                        obj = header;
                         this.cardHeader.push(Object.keys(obj)[0], Object.values(obj)[0]);
+                        return
                     }
-                },
-                headerValidation(headers){
-                    let obj = Object.keys(headers)
-                    let result = true;
-                    if(obj.length > 0){
-                        obj.forEach((key) => {
-                            result &&= Object.keys(this.allHeaders).includes(key);    
-                        })
-                        return result;
-                    }
+                    obj = this.headers;
+                    this.cardHeader.push(Object.keys(obj)[0], Object.values(obj)[0]);
                 },
                 removeSelect(){
                     this.selectable = false;
