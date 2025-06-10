@@ -1,4 +1,6 @@
 @props([
+    'tailwindcss' => false,
+    'animatecss' => true,
     'config' => []
 ])
 @php
@@ -41,7 +43,15 @@
 
 
 @endphp
+@if ($tailwindcss)
+    <!-- TAILWIND CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+@endif
 
+@if ($animatecss)
+    <!-- animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+@endif
 <style>
     :root {
         --stm-ui-primary: {{ $primary }};
@@ -57,6 +67,10 @@
         --stm-ui-info: {{ $info }};
         --stm-ui-muted: {{ $muted }};
         --stm-ui-border: {{ $border }};
+    }
+
+    [x-cloak] {
+            display: none !important;
     }
 
     body {
