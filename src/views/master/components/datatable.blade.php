@@ -97,19 +97,19 @@
         <section class="py-4 flex flex-wrap justify-end items-center gap-2 md:max-w-full max-w-[280px]">
             @if($searchable)
                 <div>
-                    <x-stm::search :theme="$theme" :color="$backgroundColor" x-model="navigation.search" x-on:keyup.debounce="setFinalData()" size="sm" />
+                    <x-stm::search :theme="$theme" :color="$backgroundColor" x-model="navigation.search" x-on:keyup.debounce="setFinalData()" />
                 </div>
             @endif
             <div class="flex items-center gap-4">
                 @if(!$no_pagination)
                     <div class="flex items-center gap-2">
-                        <x-stm::select :theme="$theme" :color="$backgroundColor" size="sm" x-model="pageControl.perPage" x-on:change="setFinalData()" :options="$perPageOptions" />
+                        <x-stm::select :theme="$theme" :color="$backgroundColor" x-model="pageControl.perPage" x-on:change="setFinalData()" :options="$perPageOptions" />
                         <span>/page</span>
                     </div>
                 @endif
                     
                 @if($columns)
-                    <x-stm::button :id="$dropBtnId" :theme="$theme" :color="$color" :backgroundColor="$backgroundColor" size="sm"  x-data x-on:click="$stm.toggle('{{ $dropdownId }}')" >
+                    <x-stm::button :id="$dropBtnId" :theme="$theme" :color="$color" :backgroundColor="$backgroundColor" x-on:click="$stm.toggle('{{ $dropdownId }}')" >
                         <div class="flex items-center gap-2 justify-between">
                             <span>Columns</span>
                             <span class="size-3"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>

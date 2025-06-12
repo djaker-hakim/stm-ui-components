@@ -1,5 +1,6 @@
 {{-- 
     attributes id, theme, color, size, class, message
+    theme: 'standard'
     id: for identifing the component API
     size: sm, md, lg
     class: for styling

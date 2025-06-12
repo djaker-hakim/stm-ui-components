@@ -1,6 +1,7 @@
 {{-- 
     attributes id, theme, color, size, config
     id: for identifing the component API
+    theme: 'standard', 'stm'
     color: component color
     size: xs, sm, md, lg
     config: array of progress, duration, pourcentage, style

@@ -1,6 +1,7 @@
 {{-- 
     attributes id, theme, color, config
     id: for identifing the component API
+    theme: 'standard', 'stm'
     config: array of state, position, style, animation
     state: state of component
     position: start, center, end 

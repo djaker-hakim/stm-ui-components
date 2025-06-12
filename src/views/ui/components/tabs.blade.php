@@ -1,6 +1,7 @@
 {{-- 
     attributes: id, theme, color, backgroudColor, data, config
     id: for identifing the component API
+    theme: 'standard', 'stm'
     color: component color
     backgroudColor: component backgroud color
     data: array of tabs and targets, ex: ['lable' => 'bloc A', 'value' => 'blocA',  'target' => '#bloc-a', 'disabled' => false]

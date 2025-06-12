@@ -1,5 +1,6 @@
 {{-- 
     attributes theme, color, size, class
+    theme: 'standard'
     color: component color
     size: sm, md, lg, x% ex: 100px, 20rem ....
     class: for styling

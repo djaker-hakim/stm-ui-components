@@ -1,6 +1,7 @@
 {{-- 
     attributes id, theme, color, backgroundColor, size, config
     id: for identifing the component API
+    theme: 'standard', 'stm'
     color: component color
     backgroundColor: component background color
     size: sm, md, lg

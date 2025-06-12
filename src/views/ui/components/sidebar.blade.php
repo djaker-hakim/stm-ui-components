@@ -1,5 +1,6 @@
 {{-- 
     attributes id, theme, color, backgroudColor, class, config
+    theme: 'standard'
     id: for identifing the component API
     color: component color
     backgroudColor: component backgroud color

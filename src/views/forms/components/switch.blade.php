@@ -1,5 +1,6 @@
 {{-- 
     attributes: theme, color, size
+    theme: 'standard'
     size: sm, md, lg 
     config: array of style
     style: array of containerClass, lableClass, inputClass to style the checkbox

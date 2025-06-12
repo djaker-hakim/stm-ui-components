@@ -1,5 +1,6 @@
 {{-- 
     attributes theme, color, config
+    theme: 'standard'
     config: array of style
     style: array of containerClass, lableClass, inputClass, iconClass to style the radio
 --}}

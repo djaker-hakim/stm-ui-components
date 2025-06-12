@@ -1,5 +1,6 @@
 {{-- 
     attributes theme, color, backgroudColor, variant, size, class
+    theme: 'standard', 'stm'
     color: component color
     backgroudColor: component backgroud color
     variant: solid, outline, elevated
@@ -25,9 +26,9 @@ $backgroundColor = Color::colorToSnake($backgroundColor);
 
 
 $sizes = [
-    'sm' => 'text-sm px-3 py-1',
-    'md' => 'text-base px-5 py-2.5',
-    'lg' => 'text-lg px-6 py-3',
+    'sm' => 'px-2 md:px-2.5 md:py-1 py-0.5 text-xs md:text-sm',
+    'md' => 'px-2.5 md:px-3 md:py-1.5 py-1 text-sm md:text-base',
+    'lg' => 'px-3 md:px-3.5 md:py-2 py-1.5 text-base md:text-lg',
 ];
 if(!array_key_exists($size, $sizes)) $size = 'md';
 

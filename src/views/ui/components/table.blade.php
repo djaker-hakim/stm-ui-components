@@ -1,10 +1,12 @@
 {{-- 
     attributes id, theme, color, backgroundColor data, config
     id: for identifing the component API
+    theme: 'standard', 'stm'
     color: component color
     backgroundColor: component background color
     data: table data
-    config: array of selectable, selectAllBtn, view, emptyMessage, table, card
+    config: array of sortable, selectable, selectAllBtn, view, emptyMessage, table, card
+        sortable: sortable columns (bool) defaut true
         selectable: row selection (bool) default false
         selectAllBtn: the select all button (bool) default true
         view: 'auto', 'desktop', 'mobile' default 'auto'
@@ -42,6 +44,7 @@ use stm\UIcomponents\Support\Color;
 
 
     // Default Config Values
+    $config['sortable'] ??= true;
     $config['selectable'] ??= false;
     $config['selectAllBtn'] ??= true;
     $config['view'] ??= 'auto'; // auto, desktop, mobile
@@ -109,9 +112,9 @@ $lightColor = Color::colorToSnake($lightColor);
             'td' => "py-3 px-4 $bordered $tdClass",            
         ],
         'stm' => [
-            'tableContainer' => "overflow-auto md:border md:shadow md:p-0 p-4 $width $height $tableContainerClass",
+            'tableContainer' => "overflow-auto md:border md:shadow md:max-w-[800px] max-w-[280px] p-0 $width $height $tableContainerClass",
             'table' => "w-full $tableClass",
-            'thead' => "capitalize border-b border-[$backgroundColor] text-[$backgroundColor] text-sm leading-normal $sticky $theadClass",
+            'thead' => "capitalize bg-[$color] border-b border-[$backgroundColor] text-[$backgroundColor] text-sm leading-normal $sticky $theadClass",
             'tbody' => "text-sm $tbodyClass",
             'tr' => "border-b $hover $striped $trClass",
             'th' => "py-3 px-6 text-left cursor-pointer [user-select:none] $thClass",
@@ -134,6 +137,17 @@ $lightColor = Color::colorToSnake($lightColor);
         'standard' => [
             'mTable' => "w-full $mTableClass",
             'mThead' => "capitalize bg-[$backgroundColor] text-[$color] text-sm leading-normal $sticky $mTheadClass",
+            'mTbody' => "text-sm $mTbodyClass",
+            'mTr' => "border-b $hover $striped $mTrClass",
+            'mTh' => "py-2 px-3 text-left cursor-pointer [user-select:none] $mThClass",
+            'mTd' => "py-1 px-3 $bordered $mTdClass",
+            'card' => "grid grid-cols-3 justify-items-start border-b $cardClass",
+            'ch' => "uppercase font-semibold $chClass",
+            'cd' => "break-all text-wrap col-span-2 $cdClass"
+        ],
+        'stm' => [
+            'mTable' => "w-full $mTableClass",
+            'mThead' => "capitalize bg-[$color] border-b border-[$backgroundColor] text-[$backgroundColor] text-sm leading-normal $sticky $theadClass",
             'mTbody' => "text-sm $mTbodyClass",
             'mTr' => "border-b $hover $striped $mTrClass",
             'mTh' => "py-2 px-3 text-left cursor-pointer [user-select:none] $mThClass",
@@ -170,20 +184,21 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
                 <tr>
                     <th class="{{ $tables[$theme]['th'] }}" x-show="selectable" x-cloak>
                         <span x-show="selectable && selectAllBtn" x-cloak>
-                            <input type="checkbox" class="w-4 h-4 text-[{{ $color }}] border-gray-300 rounded focus:ring-[{{ $color }}] focus:ring-2" :checked="selection.length === rows.length && selection.length > 0" x-on:click="selectAll()">
+                            <x-stm::checkbox :theme="$theme" :color="$backgroundColor" ::checked="selection.length === rows.length && selection.length > 0" x-on:click="selectAll()" />
                         </span>
                         <span x-show="!selectAllBtn" x-cloak></span>
                     </th>
                     <template x-for="(header, key) in headers" :key="'header' + key">
                         <th class="{{ $tables[$theme]['th'] }}" x-on:click="sortBy(key)">
-                            <span x-text="header"></span>
-                            <span class="text-xs" x-cloak x-show="sortProps.key == key && sortable" x-text="sortProps.order === 'asc' ? '▲' : '▼'"></span>
+                            <div class="flex items-center gap-1">
+                                <span x-text="header"></span>
+                                <span class="text-xs" x-cloak x-show="sortProps.key == key && sortable" x-text="sortProps.order === 'asc' ? '▲' : '▼'"></span>
+                            </div>
                         </th>
                     </template>
                     @isset($action)
                         <th class="{{ $tables[$theme]['th'] }}">action</th>
                     @endisset
-
                 </tr>
             </thead>
 
@@ -194,7 +209,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
                     <tr class="{{ $tables[$theme]['tr'] }}">
                         <td class="{{ $tables[$theme]['td'] }}"
                             :class="selectable ? '' : 'hidden'">
-                            <input type="checkbox" class="w-4 h-4 text-[{{ $color }}] border-gray-300 rounded focus:ring-[{{ $color }}] focus:ring-2" :checked="selection.includes(row)" x-on:click.stop x-on:change="select(row)">
+                            <x-stm::checkbox :theme="$theme" :color="$backgroundColor" ::checked="selection.includes(row)" x-on:click.stop="true" x-on:change="select(row)" />
                         </td>
                         <template x-for="(header, key) in headers" :key="'row' + key">
                             <td class="{{ $tables[$theme]['td'] }}" x-text="row[key]"></td>
@@ -219,16 +234,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
         @else
             {{-- loader --}}
             <div class="flex justify-center items-center p-4" x-show="loading" x-cloak>
-                <svg class="text-gray-300 animate-spin" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                    <path
-                        d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z"
-                        stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path
-                        d="M32 3C36.5778 3 41.0906 4.08374 45.1692 6.16256C49.2477 8.24138 52.7762 11.2562 55.466 14.9605C58.1558 18.6647 59.9304 22.9531 60.6448 27.4748C61.3591 31.9965 60.9928 36.6232 59.5759 40.9762"
-                        stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
-                        class="text-[{{ $backgroundColor }}]">
-                    </path>
-                </svg>
+                <x-stm::spinner :theme="$theme" :color="$backgroundColor" />
             </div>
         @endisset
     </div>
@@ -243,13 +249,15 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
             <tr>
                 <th class="{{ $mTables[$theme]['mTh'] }}" x-show="selectable" x-cloak>
                     <span x-show="selectable && selectAllBtn" x-cloak>
-                        <input type="checkbox" class="w-4 h-4 text-[{{ $color }}] border-gray-300 rounded focus:ring-[{{ $color }}] focus:ring-2" :checked="selection.length === rows.length && selection.length > 0" x-on:click="selectAll()">
+                        <x-stm::checkbox :theme="$theme" :color="$backgroundColor" ::checked="selection.length === rows.length && selection.length > 0" x-on:click="selectAll()" />
                     </span>
                     <span x-show="!selectAllBtn" x-cloak></span>
                 </th>
                 <th class="{{ $mTables[$theme]['mTh'] }}" x-on:click="sortBy(cardHeader[0])">
-                    <span x-text="cardHeader[1]"></span>
-                    <span class="text-xs" x-cloak x-show="sortProps.key == cardHeader[0] && sortable" x-text="sortProps.order === 'asc' ? '▲' : '▼'"></span>
+                    <div class="flex items-center gap-1">
+                        <span x-text="cardHeader[1]"></span>
+                        <span class="text-xs" x-cloak x-show="sortProps.key == cardHeader[0] && sortable" x-text="sortProps.order === 'asc' ? '▲' : '▼'"></span>
+                    </div>
                 </th>
             </tr>
         </thead>
@@ -261,7 +269,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
                 <tr class="{{ $mTables[$theme]['mTr'] }}" x-data="{ open: false }" x-on:click="open = !open">
                     <td class="{{ $mTables[$theme]['mTd'] }}"
                         :class="selectable ? '' : 'hidden'">
-                        <input type="checkbox" class="w-4 h-4 text-[{{ $color }}] border-gray-300 rounded focus:ring-[{{ $color }}] focus:ring-2" :checked="selection.includes(row)" x-on:click.stop x-on:change="select(row)">
+                        <x-stm::checkbox :theme="$theme" :color="$backgroundColor" ::checked="selection.includes(row)" x-on:click.stop="true" x-on:change="select(row)" />
                     </td>
                     <td class="{{ $mTables[$theme]['mTd'] }}">
                         <div class="flex items-center space-x-2">
@@ -303,16 +311,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
     @else
         {{-- loader --}}
         <div class="flex justify-center items-center p-4" x-show="loading" x-cloak>
-            <svg class="text-gray-300 animate-spin" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                <path
-                    d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z"
-                    stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path
-                    d="M32 3C36.5778 3 41.0906 4.08374 45.1692 6.16256C49.2477 8.24138 52.7762 11.2562 55.466 14.9605C58.1558 18.6647 59.9304 22.9531 60.6448 27.4748C61.3591 31.9965 60.9928 36.6232 59.5759 40.9762"
-                    stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
-                    class="text-[{{ $backgroundColor }}]">
-                </path>
-            </svg>
+            <x-stm::spinner :theme="$theme" :color="$backgroundColor" />
         </div>
     @endisset
 </div> 

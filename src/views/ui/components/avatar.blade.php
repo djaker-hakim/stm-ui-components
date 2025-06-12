@@ -1,5 +1,6 @@
 {{-- 
     attributes theme, size, class
+    theme: 'standard'
     size: sm, md, lg, x% ex: 100px, 20rem ....
     class: for styling
 --}}

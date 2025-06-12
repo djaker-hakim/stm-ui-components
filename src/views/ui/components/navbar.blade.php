@@ -1,5 +1,6 @@
 {{-- 
     attributes theme, color, backgroudColor, class, config
+    theme: 'standard'
     color: component color
     backgroudColor: component backgroud color
     class: for styling

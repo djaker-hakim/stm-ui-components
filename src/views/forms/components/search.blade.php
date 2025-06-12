@@ -1,7 +1,8 @@
 {{-- 
     attributes: theme, color, size, config
+    theme: 'standard', 'stm'
     config: array of style
-    style: array of containerClass, inputClass, iconClass to style the search
+        style: array of containerClass, inputClass, iconClass to style the search
 --}}
 
 @props([
@@ -29,24 +30,29 @@ extract($config['style']);
 $color = Color::colorToSnake($color);
 
 $sizes = [
-    'sm' => 'px-1 py-1 text-sm',
-    'md' => 'px-1 py-1.5 text-base',
-    'lg' => 'px-1 py-2 text-lg',
+    'sm' => 'px-2 md:px-2.5 md:py-1 py-0.5 text-xs md:text-sm pl-7 md:pl-8',
+    'md' => 'px-2.5 md:px-3 md:py-1.5 py-1 text-sm md:text-base pl-8 md:pl-9',
+    'lg' => 'px-3 md:px-3.5 md:py-2 py-1.5 text-base md:text-lg pl-9 md:pl-10',
+];
+$iconSizes = [
+    'sm' => "size-4 md:size-5",
+    'md' => "size-5 md:size-6",
+    'lg' => "size-6 md:size-7"
 ];
 if(!array_key_exists($size, $sizes)) $size = 'md';
 
-$standard = 'focus:outline-none invalid:border-red-500 disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed pl-10';
+$standard = 'disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
 
 $searchInputs = [
     'standard' => [
         'container' => "relative flex items-center $containerClass",
-        'input' => "inline-block w-full bg-[var(--stm-ui-bg-2)] rounded-md focus:border-2 focus:[border-color:$color] focus:bg-[var(--stm-ui-bg-2)] transition-colors $standard $sizes[$size] $inputClass",
-        'icon' => "absolute w-5 h-5 top-2.5 left-2.5 text-[var(--stm-ui-muted)] $iconClass"
+        'input' => "block w-full bg-[var(--stm-ui-bg-2)] rounded-md focus:bg-[var(--stm-ui-bg-2)] focus:outline-0 focus:border-[$color] border border-transparent invalid:border-[--stm-ui-danger] invalid:focus:border-[--stm-ui-danger] transition-colors $standard $sizes[$size] $inputClass",
+        'icon' => "absolute top-1/2 left-2 -translate-y-1/2 text-[var(--stm-ui-muted)] $iconSizes[$size] $iconClass"
     ],
     'stm' => [
         'container' => "relative flex items-center $containerClass",
-        'input' => "inline-block w-full border-b border-slate-300 bg-[var(--stm-ui-bg-2)] focus:[border-color:$color] transition-colors $standard $sizes[$size] $inputClass",
-        'icon' => "absolute w-5 h-5 top-2.5 left-2.5 text-[var(--stm-ui-muted)] $iconClass"
+        'input' => "block w-full border-b border-slate-300 bg-[var(--stm-ui-bg-2)] focus:outline-none focus:[border-color:$color] invalid:focus:border-[--stm-ui-danger] invalid:border-[--stm-ui-danger] transition-colors $standard $sizes[$size] $inputClass",
+        'icon' => "absolute top-1/2 left-2 -translate-y-1/2 text-[var(--stm-ui-muted)] $iconSizes[$size] $iconClass"
     ],
     'custom' => [
         'container' => "$containerClass",
