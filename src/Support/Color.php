@@ -2,7 +2,6 @@
 
 namespace stm\UIcomponents\Support;
 
-require __DIR__ . '/../../vendor/autoload.php';
 
 use Mexitek\PHPColors\Color as BaseColor;
 
