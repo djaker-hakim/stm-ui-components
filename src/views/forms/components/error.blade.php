@@ -13,7 +13,7 @@
 @props([
     'id' => '',
     'theme' => '',
-    'color' => 'var(--stm-ui-danger)',
+    'color' => 'var(--stm-color-danger)',
     'size' => 'md',
     'class' => '',
     'message' => '',

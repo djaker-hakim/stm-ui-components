@@ -1,3 +1,13 @@
+{{-- 
+    attributes: tailwindcss, animatecss, config
+        tailwindcss: is for applying talwindcss cdn (bool) default false
+        animatecss: is for applying the animation library (bool) default true
+        config: is an array of theme, primary, secondary, accent, heading, text, bg-1, bg-2, danger, success, warning, info, muted, border
+            theme: is to change your default theme to all component if available
+            primary, secondary, accent, heading, text, bg-1, bg-2, danger, success, warning, info, muted, border: css color varibales that will be used for all components 
+--}}
+
+
 @props([
     'tailwindcss' => false,
     'animatecss' => true,
@@ -54,19 +64,19 @@
 @endif
 <style>
     :root {
-        --stm-ui-primary: {{ $primary }};
-        --stm-ui-secondary: {{ $secondary }};
-        --stm-ui-accent: {{ $accent }};
-        --stm-ui-bg-1: {{ $bg1 }};
-        --stm-ui-bg-2: {{ $bg2 }};
-        --stm-ui-header: {{ $heading }};
-        --stm-ui-text: {{ $text }};
-        --stm-ui-danger: {{ $danger }};
-        --stm-ui-success: {{ $success }};
-        --stm-ui-warning: {{ $warning }};
-        --stm-ui-info: {{ $info }};
-        --stm-ui-muted: {{ $muted }};
-        --stm-ui-border: {{ $border }};
+        --stm-color-primary: {{ $primary }};
+        --stm-color-secondary: {{ $secondary }};
+        --stm-color-accent: {{ $accent }};
+        --stm-color-bg-1: {{ $bg1 }};
+        --stm-color-bg-2: {{ $bg2 }};
+        --stm-color-header: {{ $heading }};
+        --stm-color-text: {{ $text }};
+        --stm-color-danger: {{ $danger }};
+        --stm-color-success: {{ $success }};
+        --stm-color-warning: {{ $warning }};
+        --stm-color-info: {{ $info }};
+        --stm-color-muted: {{ $muted }};
+        --stm-color-border: {{ $border }};
     }
 
     [x-cloak] {
@@ -74,7 +84,7 @@
     }
 
     body {
-        color: var(--stm-ui-text);
+        color: var(--stm-color-text);
     }
 
     

@@ -1,17 +1,17 @@
 {{-- 
     attributes theme, color, backgroudColor, variant, size, class
-    theme: 'standard', 'stm'
-    color: component color
-    backgroudColor: component backgroud color
-    variant: solid, outline, elevated
-    size: sm, md, lg
-    class: for styling
+        theme: 'standard', 'stm'
+        color: component color
+        backgroudColor: component backgroud color
+        variant: solid, outline, elevated
+        size: sm, md, lg
+        class: for styling
 --}}
 @props([
     'type' => 'button',
     'theme' => '',
-    'color' => 'var(--stm-ui-bg-1)',
-    'backgroundColor' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-color-bg-1)',
+    'backgroundColor' => 'var(--stm-color-accent)',
     'variant' => 'solid',
     'size' => 'md',
     'class' => '',

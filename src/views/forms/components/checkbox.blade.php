@@ -9,7 +9,7 @@
 @props([
     'type' => '',
     'theme' => '',
-    'color' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-color-accent)',
     'size' => 'md',
     'config' => []
 ])
@@ -46,7 +46,7 @@ $checkboxes = [
     'standard' => [
         'container' => "inline-flex items-center $containerClass",
         'lable' => "flex items-center cursor-pointer relative $lableClass",
-        'input' => "peer cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 bg-white checked:bg-[$color] checked:border-[$color] disabled:bg-[var(--stm-ui-muted)] disabled:opacity-60 $sizes[$size] $inputClass",
+        'input' => "peer cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 bg-white checked:bg-[$color] checked:border-[$color] disabled:bg-[var(--stm-color-muted)] disabled:opacity-60 $sizes[$size] $inputClass",
         'icon' => "absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none $iconSizes[$size] $iconClass"
     ],
     'custom' => [

@@ -14,8 +14,8 @@
 @props([
     'id' => '',
     'theme' => '',
-    'color' => 'var(--stm-ui-bg-1)',
-    'backgroundColor' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-color-bg-1)',
+    'backgroundColor' => 'var(--stm-color-accent)',
     'data', 
     'config' => []
 ])
@@ -39,12 +39,12 @@ $backgroundColor = Color::colorToSnake($backgroundColor);
     
 $tabs=[
     'standard' => [
-        'tab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-ui-muted)] $tabClass",
+        'tab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-color-muted)] $tabClass",
         'activeTab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center text-[$color] bg-[$backgroundColor] $activeTabClass",
         'container' => "$containerClass",
     ],
     'stm' =>[
-        'tab' => "inline-block px-4 py-3 cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-ui-muted)] $tabClass",
+        'tab' => "inline-block px-4 py-3 cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-color-muted)] $tabClass",
         'activeTab' => "inline-block px-4 py-3 cursor-pointer text-center text-[$backgroundColor] bg-[$color] border-b-2 border-[$backgroundColor] $activeTabClass",
         'container' => "$containerClass",
     ],

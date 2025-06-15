@@ -22,8 +22,8 @@
     'id' => '',
     'theme' => '',
     'size' => 'md',
-    'color' => 'var(--stm-ui-bg-1)',
-    'backgroundColor' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-color-bg-1)',
+    'backgroundColor' => 'var(--stm-color-accent)',
     'config' => []
 ])
 
@@ -66,15 +66,15 @@ $paginations = [
         'container' => "flex $containerClass",
         'item' => "$sta border border-r-0 border-slate-300 shadow-sm hover:shadow-lg  hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] $itemClass",
         'activeItem' => "text-[$color] bg-[$backgroundColor] border-[$backgroundColor] $activeItemClass",
-        'leftArrow' => "rounded-md rounded-r-none border border-r-0 border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $leftArrowClass",
-        'rightArrow' => "rounded-md rounded-l-none border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $rightArrowClass"
+        'leftArrow' => "rounded-md rounded-r-none border border-r-0 border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-color-muted)] disabled:hover:border-[var(--stm-color-muted)] disabled:border-[var(--stm-color-muted)] disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed $leftArrowClass",
+        'rightArrow' => "rounded-md rounded-l-none border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-color-muted)] disabled:hover:border-[var(--stm-color-muted)] disabled:border-[var(--stm-color-muted)] disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed $rightArrowClass"
     ],
     'stm' => [
         'container' => "flex space-x-2 $containerClass",
         'item' => "$sta border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] $itemClass",
         'activeItem' => "text-[$color] bg-[$backgroundColor] border-[$backgroundColor] $activeItemClass",
-        'leftArrow' => "border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $leftArrowClass",
-        'rightArrow' => "border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-ui-muted)] disabled:hover:border-[var(--stm-ui-muted)] disabled:border-[var(--stm-ui-muted)] disabled:text-[var(--stm-ui-muted)] disabled:cursor-not-allowed $rightArrowClass"
+        'leftArrow' => "border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-color-muted)] disabled:hover:border-[var(--stm-color-muted)] disabled:border-[var(--stm-color-muted)] disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed $leftArrowClass",
+        'rightArrow' => "border border-slate-300 shadow-sm hover:shadow-lg hover:text-[$color] hover:bg-[$backgroundColor] hover:border-[$backgroundColor] $sizes[$size] disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-[var(--stm-color-muted)] disabled:hover:border-[var(--stm-color-muted)] disabled:border-[var(--stm-color-muted)] disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed $rightArrowClass"
     ],
     'custom' => [
         'container' => $containerClass,

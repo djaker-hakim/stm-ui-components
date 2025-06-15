@@ -26,7 +26,7 @@
     'id' => '',
     'theme' => '',
     'color' => '',
-    'backgroundColor' => 'var(--stm-ui-bg-2)',
+    'backgroundColor' => 'var(--stm-color-bg-2)',
     'class' => '',
     'config' => [],
 ])

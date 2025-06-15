@@ -8,6 +8,7 @@
     config: array of state, clickOutside, backdrop, style, animation
     state: state of component (bool) default false
     clickOutside: option to be availibale or not (bool) default true
+    backdrop: 'none', 'dark', 'light', 'blur'
     style: array of backdropClass
         backdropClass: styling of the backdrop
     animation: none, array of enter, leave, duration
@@ -28,7 +29,7 @@
     'id',
     'theme' => '',
     'color' => '',
-    'backgroundColor' => 'var(--stm-ui-bg-1)',
+    'backgroundColor' => 'var(--stm-color-bg-1)',
     'class' => '',
     'config' => [],
 ])

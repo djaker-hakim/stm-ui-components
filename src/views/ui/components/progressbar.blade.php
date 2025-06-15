@@ -17,7 +17,7 @@
 @props([
     'id' => '',
     'theme' => '',
-    'color'=> 'var(--stm-ui-primary)',
+    'color'=> 'var(--stm-color-accent)',
     'size' => 'md',
     'config' => [],    
 ])

@@ -1,11 +1,11 @@
 {{-- 
     attributes id, theme, color, size, class, options, selected
-    theme: 'standard', 'stm'
-    id: for identifing the component API
-    size: sm, md, lg
-    class: for styling
-    options: array of the select options KEY is the value in option and VALUE is the innertext ex: ['blue' => 'Blue', 'red' => 'Red']
-    selected: give a KEY(value) of option to be selected ex: 'blue'
+        theme: 'standard', 'stm'
+        id: for identifing the component API
+        size: sm, md, lg
+        class: for styling
+        options: array of the select options KEY is the value in option and VALUE is the innertext ex: ['blue' => 'Blue', 'red' => 'Red']
+        selected: give a KEY(value) of option to be selected ex: 'blue'
         
     API: you can get the selected value by this method
     method: getSelected();
@@ -15,7 +15,7 @@
     'id' => '',
     'theme' => '',
     'size' => 'md',
-    'color' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-ui-accent)',
     'class' => '',
     'options' => [],
     'selected' => '',

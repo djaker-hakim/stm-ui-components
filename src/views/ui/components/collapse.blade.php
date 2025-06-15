@@ -1,12 +1,12 @@
 {{-- 
     attributes id, theme, color, backgroundColor class, config
-    id: for identifing the component API
-    theme: 'standard', 'stm'
-    color: component color
-    backgroundColor: component background color
-    class: for styling
-    config: array of state
-    state: state of component
+        id: for identifing the component API
+        theme: 'standard', 'stm'
+        color: component color
+        backgroundColor: component background color
+        class: for styling
+        config: array of state
+            state: state of component
     
     API: you can set the collapse state this methods
     methods: open(), close(), toggle()
@@ -19,7 +19,7 @@
     'id' => '',
     'theme' => '',
     'color' => '',
-    'backgroundColor' => 'var(--stm-ui-bg-2)',
+    'backgroundColor' => 'var(--stm-color-bg-2)',
     'class' => '',
     'config' => [],
 ])

@@ -1,13 +1,13 @@
 {{-- 
     attributes id, theme, color, size, class, config
-    theme: 'standard', 'stm'
-    id: for identifing the component API
-    size: sm, md, lg
-    class: for styling
-    config: array of state, showButton, style,
-    state: state of component
-    showButton: if you want the show button in the component
-    style: array of iconClass to style the button
+        theme: 'standard', 'stm'
+        id: for identifing the component API
+        size: sm, md, lg
+        class: for styling
+        config: array of state, showButton, style,
+            state: state of component
+            showButton: if you want the show button in the component
+            style: array of iconClass to style the button
         
     API: you can show or hide the password input by this methods
     methods: show(), hide(), toggle();
@@ -17,7 +17,7 @@
     'type' => '',
     'theme' => '',
     'size' => 'md',
-    'color' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-ui-accent)',
     'class' => '',
     'config' => []
 ])

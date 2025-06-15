@@ -1,3 +1,10 @@
+{{-- 
+    $stm is js object that controls all components.
+    available Methods: component(id), allComponents(), open(id), close(id), toggle(id), getState(id)
+    Note for nested components you need to use the Alpinejs $nextTick() method so all components will load properly  
+--}}
+
+
 <!-- STM UI -->
 <script>
     window.$stm = {
@@ -22,6 +29,9 @@
         },
         toggle(id){
             this.component(id).toggle();
+        }
+        getState(id){
+            return this.component(id).state;
         }
     };
 

@@ -1,7 +1,11 @@
+{{-- 
+     attributes: config
+        config: array of alpinejs
+        alpinejs: using alpinejs and plugins CDN's (bool) default true
+--}}
+
 @props([
-    'config' => [
-        'alpinejs' => true,
-    ],
+    'config' => [],
 ])
 @php
     use stm\UIcomponents\Support\Stm;

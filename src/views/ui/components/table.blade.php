@@ -22,8 +22,12 @@
             cardHeader: array of header in mobile view KEY(key), VALUE(lable) ex: ['name' => 'Nom & Prénom']
             style: array of mTableClass, mTheadClass, mTbodyClass, mTrClass, mThClass, mTdClass, cardClass, chClass, cdClass 
 
+    slots: action, loader
+        action: for action buttons you got access to the row object eg. row.id depending on the data
+        loader: for a custom loader
+
     API: 
-        available methods: setupData(data), removeSelect(), showSelect(), toggleSelect(), getSelection(),
+        available methods: setupData(data), setData(data), removeSelect(), showSelect(), toggleSelect(), getSelection(),
             removeSelect(), showSelect(), toggleSelect(): set the selectable
             setupData(): adding data
         available properties: loading
@@ -32,8 +36,8 @@
 @props([
     'id' => '',
     'theme' => '',
-    'color' => 'var(--stm-ui-bg-1)',
-    'backgroundColor' => 'var(--stm-ui-primary)',
+    'color' => 'var(--stm-color-bg-1)',
+    'backgroundColor' => 'var(--stm-color-accent)',
     'data' => [],
     'config' => []
 ])
@@ -49,7 +53,7 @@ use stm\UIcomponents\Support\Color;
     $config['selectAllBtn'] ??= true;
     $config['view'] ??= 'auto'; // auto, desktop, mobile
     $config['emptyMessage'] ??= 'no data found';
-    $config['table']['style']['lightColor'] ??= 'var(--stm-ui-bg-2)';
+    $config['table']['style']['lightColor'] ??= 'var(--stm-color-bg-2)';
     $lightColor = $config['table']['style']['lightColor'];
     // Table Default Values
     $config['table']['headers'] ??= [];
@@ -226,7 +230,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
         </table>
 
         {{--  No data found  --}}
-        <div class="text-center text-[var(--stm-ui-muted)] text-sm p-4" x-show="rows.length === 0 && !loading && Object.keys(headers).length > 0" x-cloak>
+        <div class="text-center text-[var(--stm-color-muted)] text-sm p-4" x-show="rows.length === 0 && !loading && Object.keys(headers).length > 0" x-cloak>
             {{ $config['emptyMessage'] }}
         </div>
         @isset($loader)
@@ -303,7 +307,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
         </tbody>  
     </table>
     {{--  No data found  --}}
-    <div class="text-center text-[var(--stm-ui-muted)] text-sm p-4" x-show="rows.length === 0 && !loading && Object.keys(headers).length > 0" x-cloak>
+    <div class="text-center text-[var(--stm-color-muted)] text-sm p-4" x-show="rows.length === 0 && !loading && Object.keys(headers).length > 0" x-cloak>
         {{ $config['emptyMessage'] }}
     </div>
     @isset($loader)
