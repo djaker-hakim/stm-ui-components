@@ -5,29 +5,43 @@ namespace stm\UIcomponents\Support;
 
 class Stm
 {
-    private static $COLOR;
-    private static $STYLES;
-    private static $SCRIPTS = [];
 
-
-
+    /**
+     * Create a new Config instance for styles.
+     *
+     * @return Config A Config object initialized with 'styles.php'.
+     */
     public static function styles(): Config{
-        static::$STYLES = new Config('styles.php');
-        return static::$STYLES;
+        return new Config('styles.php');
     }
 
 
+    /**
+     * Create a new Script instance.
+     * @return Script a new Script object.
+     */
     public static function scripts(): Script {
-        static::$SCRIPTS = new Script();
         return new Script();
     }
 
+    /**
+     * Create a new Color instance.
+     * 
+     * @param string $color The color value as a string (e.g., "#ff0000", "red").
+     * @return Color A new Color object initialized with the given color.
+     */
     public static function colors(string $color): Color{
-        static::$COLOR = new Color($color);
-        return static::$COLOR;
+        return new Color($color);
     }
 
-    public static function id(string $id, string $prefix) : string {
+    /**
+     * returns the given $id if it’s not empty. 
+     * If $id is an empty string, it generates a unique ID, optionally prefixed by $prefix.
+     * @param string $id
+     * @param string $prefix
+     * @return string
+     */
+    public static function id(string $id, string $prefix = '') : string {
         if($id == '') return uniqid($prefix);
         return $id;
     }

@@ -8,13 +8,26 @@ use Mexitek\PHPColors\Color as BaseColor;
 class Color extends BaseColor {
 
 
+    /**
+     * 
+     * @var static class $color 
+     */
     protected static $color;
+
+/**
+ * init the color
+ * @param string $color
+ */
 public function __construct($color) {
     static::$color = $color;
     parent::__construct(self::convertColorToHex($color));
 }
 
-
+/**
+ * coverts hsl array to string
+ * @param array $hsl
+ * @return string
+ */
 public static function hslToString(array $hsl): string {
     $h = (int)($hsl['H'] * 360);
     $s = (int)($hsl['S'] * 100);
@@ -22,6 +35,11 @@ public static function hslToString(array $hsl): string {
     return "hsl($h, $s%, $l%)";
 }
 
+/**
+ * convert hsl string value to hsl array ['H' => x , 'S' => y , 'L' => z ]
+ * @param string $color
+ * @return array<float|int>
+ */
 public static function stringToHsl(string $color): array {
     $color = trim(strtolower($color));
     $color = str_replace(['hsl(', ')', '%'], '', $color);
@@ -32,6 +50,11 @@ public static function stringToHsl(string $color): array {
     return $hsl;
 }
 
+/**
+ * converts rgb string to rgb array ['R' => x , 'G' => y , 'B' => z ]
+ * @param string $color
+ * @return array
+ */
 public static function stringToRgb(string $color): array {
     $color = trim(strtolower($color));
     $color = str_replace(['rgb(', ')'], '', $color);
@@ -42,6 +65,12 @@ public static function stringToRgb(string $color): array {
     return $rgb;
 }
 
+/**
+ * convert any color format to hex format
+ * @param string $color
+ * @throws \Exception
+ * @return string
+ */
 public static function convertColorToHex(string $color){
     
     $format = self::detectColorFormat($color);
@@ -70,6 +99,11 @@ public static function convertColorToHex(string $color){
         return 'unknown';
     }
 
+    /**
+     * converts string color formats (rgb, hsl, rgba) to snake case
+     * @param string $color
+     * @return string
+     */
     public static function colorToSnake(string $color) : string {
         $colorFormat = self::detectColorFormat($color);
         if(in_array($colorFormat, ['rgb', 'hsl', 'rgba'])){
