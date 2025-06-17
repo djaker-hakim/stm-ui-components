@@ -34,7 +34,65 @@ This library is primarily built for use in Laravel projects. At the moment, it i
 
 # Installation
 
+## Requirements
+
+To use **Stm UI Components**, ensure your Laravel project meets the following requirements:
+
+- **Laravel**: ^10.x or higher
+- **PHP**: ^8.1 or higher
+
+Install the package via Composer:
+
+```bash
+composer require djaker-hakim/stm-ui-components
+```
+
 # Usage
+
+To use the Stm UI Components library in your Laravel Blade templates, you need to include the necessary styles and scripts, then use any component with the `x-stm::` prefix.
+
+1. **Include styles**  
+   Use `<x-stm::styles />` in the `<head>` section of your HTML to include the component styles. If you're using Tailwind CSS, set the `:tailwindcss` attribute to `true`.
+
+2. **Use components**  
+   Components are prefixed with `x-stm::` and follow Blade component syntax. For example:  
+   `<x-stm::button>Click Me</x-stm::button>`
+
+3. **Include scripts**  
+   Use `<x-stm::scripts />` before the closing `</body>` tag to include the required JavaScript (Alpine.js and any component logic).
+
+---
+
+## Notes
+
+- All components require `<x-stm::scripts />` to function properly.
+- Tailwind CSS must be included for components to render correctly when using Tailwind-based themes.
+
+---
+
+## Example
+
+```blade
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{-- Include Stm styles and Tailwind CSS --}}
+    <x-stm::styles :tailwindcss="true" />
+    <title>Stm UI Components</title>
+</head>
+<body>
+
+    {{-- Using a button component --}}
+    <x-stm::button size="md">
+        Click Me
+    </x-stm::button>
+
+    {{-- Include Alpine.js and component interactivity --}}
+    <x-stm::scripts />
+</body>
+</html>
+```
+
 
 # Components Overview
 
