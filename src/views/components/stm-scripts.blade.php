@@ -29,7 +29,7 @@
         },
         toggle(id){
             this.component(id).toggle();
-        }
+        },
         getState(id){
             return this.component(id).state;
         }
