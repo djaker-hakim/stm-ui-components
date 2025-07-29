@@ -17,7 +17,7 @@
     'type' => '',
     'theme' => '',
     'size' => 'md',
-    'color' => 'var(--stm-ui-accent)',
+    'color' => 'var(--stm-color-accent)',
     'class' => '',
     'config' => []
 ])
@@ -51,15 +51,15 @@ $iconSizes = [
 ];
 if(!array_key_exists($size, $sizes)) $size = 'md';
 
-$standard = 'disabled:opacity-60 disabled:bg-[var(--stm-ui-muted)] disabled:cursor-not-allowed';
+$standard = 'disabled:opacity-60 disabled:bg-[var(--stm-color-muted)] disabled:cursor-not-allowed';
 $passwordInputs = [
     'standard' => [
-        'input' => "block w-full bg-[var(--stm-ui-bg-2)] rounded-md focus:bg-[var(--stm-ui-bg-2)] focus:outline-0 focus:border-[$color] border border-transparent invalid:border-[--stm-ui-danger] invalid:focus:border-[--stm-ui-danger] transition-colors $standard $sizes[$size] $class",
-        'icon' => "absolute top-1/2 right-2 -translate-y-1/2 fill-[var(--stm-ui-muted)] $iconSizes[$size] $iconClass"
+        'input' => "block w-full bg-[var(--stm-color-bg-2)] rounded-md focus:bg-[var(--stm-color-bg-2)] focus:outline-0 focus:border-[$color] border border-transparent invalid:border-[--stm-color-danger] invalid:focus:border-[--stm-color-danger] transition-colors $standard $sizes[$size] $class",
+        'icon' => "absolute top-1/2 right-2 -translate-y-1/2 fill-[var(--stm-color-muted)] $iconSizes[$size] $iconClass"
     ],
     'stm' => [
-        'input' => "block w-full border-b border-slate-300 bg-[var(--stm-ui-bg-2)] focus:outline-none focus:[border-color:$color] invalid:focus:border-[--stm-ui-danger] invalid:border-[--stm-ui-danger] transition-colors $standard $sizes[$size] $class",
-        'icon' => "absolute top-1/2 right-2 -translate-y-1/2 fill-[var(--stm-ui-muted)] $iconSizes[$size] $iconClass"
+        'input' => "block w-full border-b border-slate-300 bg-[var(--stm-color-bg-2)] focus:outline-none focus:[border-color:$color] invalid:focus:border-[--stm-color-danger] invalid:border-[--stm-color-danger] transition-colors $standard $sizes[$size] $class",
+        'icon' => "absolute top-1/2 right-2 -translate-y-1/2 fill-[var(--stm-color-muted)] $iconSizes[$size] $iconClass"
     ],
     'custom' => [
         'input' => $class,
@@ -75,7 +75,8 @@ $theme = array_key_exists($theme, $passwordInputs) ? $theme : 'standard'; // the
 
 <div x-data="passwordFn(@js($id), @js($config))" class="relative flex items-center">
     <input :id="id" :type="state ? 'text' : 'password' " class="{{ $passwordInputs[$theme]['input'] }}" {{ $attributes }}>
-    <button 
+    <button
+    type="button"
     class="{{ $passwordInputs[$theme]['icon'] }}"
     x-show="showButton"
     x-cloak

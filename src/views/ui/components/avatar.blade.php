@@ -27,7 +27,7 @@ $avatars = [
 ];
 
 $theme = $theme ? $theme : Stm::styles()->theme;
-$theme = array_key_exists($theme, $btns) ? $theme : 'standard'; // theme fallback value
+$theme = array_key_exists($theme, $avatars) ? $theme : 'standard'; // theme fallback value
 @endphp
 
 

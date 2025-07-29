@@ -41,6 +41,7 @@ $color = Color::colorToSnake($color);
 
 // varibales from config
 $duration = $config['duration'];
+extract($config);
 extract($config['style']);
 
 $sizes = [
