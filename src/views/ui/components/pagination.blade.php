@@ -91,7 +91,7 @@ $theme = array_key_exists($theme, $paginations) ? $theme : 'standard'; // theme 
 
 
 
-<div :id="id" class="{{ $paginations[$theme]['container'] }}" x-data="paginationFn(@js($id), @js($config))" {{ $attributes }}>
+<div :id="id" class="{{ $paginations[$theme]['container'] }}" x-data="$stm.pagination(@js($id), @js($config))" {{ $attributes }}>
 
     <button class="{{ $paginations[$theme]['leftArrow'] }}" type="button" x-on:click="prev()" :disabled="currentPage == 1" >
       <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">

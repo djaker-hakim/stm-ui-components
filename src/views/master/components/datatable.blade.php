@@ -53,8 +53,7 @@
     use stm\UIcomponents\Support\Stm;
     use stm\UIcomponents\Support\Color;
 
-    Stm::scripts()->enable('datatable');
-    
+        
     // default values
     $config['pagination'] ??= [];
     $config['navigation'] ??= [];
@@ -95,7 +94,7 @@
 @endphp
 
 
-<div x-data="dataTableFn(@js($id), @js($data), @js($config))">
+<div x-data="$stm.dataTable(@js($id), @js($data), @js($config))">
     @if(!$no_navigation)
         <section class="py-4 flex flex-wrap justify-end items-center gap-2 md:max-w-full max-w-[280px]">
             @if($searchable)

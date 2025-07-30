@@ -73,7 +73,7 @@ $theme = array_key_exists($theme, $passwordInputs) ? $theme : 'standard'; // the
 
 
 
-<div x-data="passwordFn(@js($id), @js($config))" class="relative flex items-center">
+<div x-data="$stm.password(@js($id), @js($config))" class="relative flex items-center">
     <input :id="id" :type="state ? 'text' : 'password' " class="{{ $passwordInputs[$theme]['input'] }}" {{ $attributes }}>
     <button
     type="button"

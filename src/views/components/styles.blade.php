@@ -80,7 +80,7 @@
     }
 
     [x-cloak] {
-            display: none !important;
+        display: none !important;
     }
 
     body {

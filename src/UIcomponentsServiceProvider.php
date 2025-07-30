@@ -3,7 +3,6 @@
 namespace stm\UIcomponents;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
 
 class UIcomponentsServiceProvider extends ServiceProvider
 {
@@ -20,6 +19,7 @@ class UIcomponentsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         $this->loadViewsFrom([
             __DIR__.'/views', 
             __DIR__.'/views/forms',

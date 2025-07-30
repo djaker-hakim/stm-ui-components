@@ -50,7 +50,7 @@ $theme = array_key_exists($theme, $collapses) ? $theme : 'standard'; // theme fa
 <section 
 :id="id"
 class="{{ $collapses[$theme] }}";
-x-data="collapseFn(@js($id), @js($config))" 
+x-data="$stm.collapse(@js($id), @js($config))" 
 x-on:open-collapse.window="open($event.detail.id)"
 x-on:close-collapse.window="close($event.detail.id)" 
 x-on:toggle-collapse.window="toggle($event.detail.id)"

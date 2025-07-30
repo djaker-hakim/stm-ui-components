@@ -7,19 +7,15 @@
 @props([
     'config' => [],
 ])
-@php
-    use stm\UIcomponents\Support\Stm;
-    
+@php    
     // default values
     $config['alpinejs'] ??= true;
-    $scripts = Stm::scripts()->getScripts();
-    $scripts['datatable'] ??= false;
+   
     
     // varibales from config
     extract($config);
-    extract($scripts);
-
 @endphp
+
 
 @if ($alpinejs)
     <!-- ALPINEJS PLUGIN CDN -->
@@ -31,8 +27,5 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endif
 
-<x-stm::stm-scripts />
+<script src="/stm-ui-components/script.js"></script>
 
-@if($datatable)
-    <x-stm::datatable-script />
-@endif

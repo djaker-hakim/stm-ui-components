@@ -68,7 +68,7 @@
 
     $sidebars = [
         'standard' => [
-            'container' => "absolute md:relative md:p-2 py-2 overflow-hidden z-10 transition-[width] duration-200 md:z-0 top-0 $heightClass $positions[$position] text-[$color] bg-[$backgroundColor] $class",
+            'container' => "absolute md:relative overflow-hidden z-10 transition-[width] duration-200 md:z-0 top-0 $heightClass $positions[$position] text-[$color] bg-[$backgroundColor] $class",
         ],
         'custom' => [
             'container' => "$class",
@@ -82,15 +82,9 @@
 @endphp
 
 <section class="relative">
-    <aside x-data="sideBarFn('{{ $id }}', @js($config))" class="{{ $sidebars[$theme]['container'] }}" id="{{ $id }}"
-        @if (!$state) x-cloak @endif
-        @if ($number > 0) :class="state ? '{{ $maxWidthClass }}' : '{{ "md:$minWidthClass w-0" }}'"
-    @else
-        x-show="state"
-        x-transition:enter="transition-[width] duration-500"
-        x-transition:enter-start="{{ $minWidthClass }}"
-        x-transition:enter-end="{{ $maxWidthClass }}"
-        x-transition:leave="transition-[width] duration-500 {{ $minWidthClass }}" @endif
+    <aside x-data="$stm.sideBar('{{ $id }}', @js($config))" class="{{ $sidebars[$theme]['container'] }}" id="{{ $id }}"
+        x-cloak
+        :class="state ? '{{ $maxWidthClass }}' : '{{ "md:$minWidthClass w-0" }}'"
         @if ($clickOutside) x-on:click.outside="if(window.innerWidth < breakpoint.width) close(id)" @endif
         x-on:resize.window ="checkSize()" x-on:open-sidebar.window="open($event.detail.id)"
         x-on:close-sidebar.window="close($event.detail.id)" x-on:toggle-sidebar.window="toggle($event.detail.id)"

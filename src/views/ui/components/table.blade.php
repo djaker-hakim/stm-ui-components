@@ -178,7 +178,7 @@ $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallback value
 @endphp
 
-<section class="{{ $tables[$theme]['tableContainer'] }}" x-data="tableFn(@js($id), @js($data), @js($config))">
+<section class="{{ $tables[$theme]['tableContainer'] }}" x-data="$stm.table(@js($id), @js($data), @js($config))">
 
 @if($view == 'auto' || $view == 'desktop')
     <div class="{{ $tableResClass }}">

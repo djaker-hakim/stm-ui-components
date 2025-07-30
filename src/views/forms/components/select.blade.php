@@ -48,7 +48,7 @@ $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $selects) ? $theme : 'standard'; // theme fallback value
 @endphp
 
-<select :id="id" x-data="selectFn(@js($id), @js($options), @js($selected))" class="{{ $selects[$theme] }}" {{ $attributes }}>
+<select :id="id" x-data="$stm.select(@js($id), @js($options), @js($selected))" class="{{ $selects[$theme] }}" {{ $attributes }}>
     <template x-for="(value, key) in options" :key="key">
         <option :selected="key == selected" :value="key" x-text="value"></option>
     </template>

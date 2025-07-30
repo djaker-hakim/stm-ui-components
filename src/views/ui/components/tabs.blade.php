@@ -62,7 +62,7 @@ $theme = array_key_exists($theme, $tabs) ? $theme : 'standard'; // theme fallbac
 
 
 
-<section :id="id" x-data="tabsFn(@js($id), @js($data), @js($config))" {{ $attributes }}>
+<section :id="id" x-data="$stm.tabs(@js($id), @js($data), @js($config))" {{ $attributes }}>
     <div class="flex w-full overflow-x-auto space-x-2">
         <template x-for="(tab, index) in tabs" :key="'tab-' + index">
             <button type="button" :class="activeTab == tab.value ? '{{ $tabs[$theme]["activeTab"] }}' : '{{ $tabs[$theme]["tab"]}}'" x-on:click="activate(tab.value)" :disabled="!!tab.disabled" x-html="tab.lable">

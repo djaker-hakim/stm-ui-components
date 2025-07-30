@@ -81,7 +81,7 @@ $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $dropdowns) ? $theme : 'standard'; // theme fallback value
 @endphp
 
-<section x-data="dropdownFn(@js($id), @js($config))"
+<section x-data="$stm.dropdown(@js($id), @js($config))"
     class="{{ $dropdowns[$theme] }}"
     :id="id" 
     x-on:open-dropdown.window="open($event.detail.id)"

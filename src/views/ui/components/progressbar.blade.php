@@ -88,7 +88,7 @@ $theme = $theme ? $theme : Stm::styles()->theme;
 $theme = array_key_exists($theme, $progressbars) ? $theme : 'standard'; // theme fallback value
 @endphp
 
-<section :id="id" x-data="progressBarFn(@js($id), @js($config))" {{ $attributes }}>
+<section :id="id" x-data="$stm.progressBar(@js($id), @js($config))" {{ $attributes }}>
 
     {{-- <!-- Progress Bar lable --> --}}
     <div class="{{ $progressbars[$theme]['lable'] }}"

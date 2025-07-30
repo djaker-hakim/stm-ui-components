@@ -97,7 +97,7 @@ $theme = array_key_exists($theme, $modals) ? $theme : 'standard'; // theme fallb
 @endphp
 
 <section class="{{ $modals[$theme]['backdrop'] }}"
-x-data="modalFn(@js($id), @js($config))" 
+x-data="$stm.modal(@js($id), @js($config))" 
 x-show="state" 
 x-cloak 
 x-on:open-modal.window="open($event.detail.id)"

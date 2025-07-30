@@ -95,7 +95,7 @@ $theme = array_key_exists($theme, $alerts) ? $theme : 'standard'; // theme fallb
 
 <section class="{{ $alerts[$theme]['container'] }}"
     :class="{ 'bg-[#fccaca]': mode == 'error', 'bg-[#e6f7ff]': mode == 'info', 'bg-[#fcedca]': mode == 'warning', 'bg-[#c7fccb]': mode == 'success' }"
-    x-data="alertFn(@js($id), @js($config))"
+    x-data="$stm.alert(@js($id), @js($config))"
     x-show="state"
     @if(!$no_animation)
         x-transition:enter="{{ "$animationEnter $duration" }}"
