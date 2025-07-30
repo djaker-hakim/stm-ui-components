@@ -7,9 +7,13 @@
 @props([
     'config' => [],
 ])
-@php    
+@php 
+    use stm\UIcomponents\Support\Stm;
     // default values
     $config['alpinejs'] ??= true;
+    
+    $version = Stm::version();
+    $stmUrl = "/stm-ui-components/script.js?v=$version";
    
     
     // varibales from config
@@ -27,5 +31,5 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endif
 
-<script src="/stm-ui-components/script.js"></script>
+<script src="{{ $stmUrl }}"></script>
 

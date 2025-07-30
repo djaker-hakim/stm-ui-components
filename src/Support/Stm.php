@@ -45,6 +45,15 @@ class Stm
         if($id == '') return uniqid($prefix);
         return $id;
     }
+
+    public static function version(){
+        return \Composer\InstalledVersions::getPrettyVersion(static::fullname());
+    }
+
+    public static function fullname(){
+        $file = __DIR__. '/../../composer.json';
+        return json_decode(file_get_contents($file))->name;
+    }
     
    
     
