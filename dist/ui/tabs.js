@@ -14,8 +14,7 @@ window.$stm.tabs = (id, data, config = []) => {
                     }
                 });
             });
-            this.activateDefault();
-            
+            this.activateDefault();   
         },
         activate(value){
             if(value == 'unknown'){

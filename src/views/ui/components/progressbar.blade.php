@@ -7,7 +7,7 @@
     config: array of progress, duration, pourcentage, style
         progress: initial progress (number) default 0
         duration: speed to get from progress to target progress
-        pourcentage: 'none', 'start', 'center', 'end' default none
+        pourcentage: 'none', 'start', 'center', 'end', 'in'. default none
         style: array of lableClass, containerClass, fillClass, pourcentageClass
     
     API: available methods: setProgess(), setLable(), setDuration();
@@ -104,17 +104,16 @@ $theme = array_key_exists($theme, $progressbars) ? $theme : 'standard'; // theme
             :class="progress === -1 ? 'absolute animate-progress-bar w-1/3' : ''" 
             :style="progress === -1 ? '' : `width: ${progress}%`"
         >
-            @if($config['pourcentage'] == 'in')
+            <template x-if="pourcentage == 'in'">
                 <div class="{{ $progressbars[$theme]['pourcentage'] }}" >
                     <span x-text="progress === -1 || progress === 0 ? '' : progress + '%'"></span>
                 </div>
-            @endif
+            </template>
         </div>
     </div>
-    @if($config['pourcentage'] != 'in')
+    <template x-if="pourcentage != 'in'">
         <div class="{{ $progressbars[$theme]['pourcentage'] }}" >
             <span x-text="progress === -1 ? '' : progress + '%'"></span>
         </div>
-    @endif
-
+    </template>
 </section>

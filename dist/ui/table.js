@@ -75,9 +75,6 @@ window.$stm.table = (id, data, config) => {
         selectAll(){
             this.selection = this.selection.length === this.rows.length ? [] : this.rows;
         },
-        getId(){
-            return this.id;
-        },
         getSelection(){
             return this.selection;
         },

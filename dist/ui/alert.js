@@ -1,8 +1,11 @@
+import { stateTrait } from "../traits/stateTrait";
+
 window.$stm.alert = (id, config) => {
     return {
         id: id,
         type: 'alert',
         state: config.state,
+        ...stateTrait,
         content: config.content,
         mode: config.mode,
         init() {
@@ -34,35 +37,5 @@ window.$stm.alert = (id, config) => {
                 this.close();
             }, duration);
         },
-        open(id = '') {
-            if (id) {
-                this.id == id ? this.state = true : '';
-            } else {
-                this.state = true;
-            }
-        },
-        close(id = '') {
-            if (id) {
-                this.id == id ? this.state = false : '';
-            } else {
-                this.state = false;
-            }
-        },
-        toggle(id = '') {
-            if (id) {
-                this.id == id ? this.state = !this.state : '';
-            } else {
-                this.state = !this.state;
-            }
-        },
-        getstate() {
-            return this.state;
-        },
-        getId() {
-            return this.id;
-        },
-        getType() {
-            return this.type;
-        }
     }
 }

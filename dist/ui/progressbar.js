@@ -5,6 +5,7 @@ window.$stm.progressBar = (id, config) => {
         lable:'',
         progress: 0,
         target: 0,
+        pourcentage: config.pourcentage,
         duration: config.duration,
         interval: null,
         init(){
@@ -40,12 +41,6 @@ window.$stm.progressBar = (id, config) => {
         },
         setDuration(value) {
             this.duration = value;
-        },
-        getId() {
-            return this.id;
-        },
-        getType() {
-            return this.type;
         },
     };
 }

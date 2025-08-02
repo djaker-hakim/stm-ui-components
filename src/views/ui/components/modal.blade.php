@@ -53,6 +53,8 @@ $clickOutside = $config['clickOutside'];
 $config['animation'] ??= [];
 
 $no_animation = ($config['animation'] == 'none');
+$transitionEnter = "";
+$transitionLeave = "";
 if(!$no_animation){
     $config['animation'] = []; // if other value then 'none'
     $config['animation']['enter'] ??= 'fadeInUp';
@@ -62,6 +64,9 @@ if(!$no_animation){
     $animationEnter = 'animate__animated animate__'.$config['animation']['enter'];
     $animationLeave = 'animate__animated animate__'.$config['animation']['leave'];
     $duration = '[--animate-duration:'.$config['animation']['duration'].']';
+
+    $transitionEnter = "x-transition:enter='$animationEnter $duration'";
+    $transitionLeave = "x-transition:leave='$animationLeave $duration'";
 }
 
 $id = Stm::id($id, 'modal-');
@@ -104,55 +109,11 @@ x-on:open-modal.window="open($event.detail.id)"
 x-on:close-modal.window="close($event.detail.id)" 
 x-on:toggle-modal.window="toggle($event.detail.id)">
     <div class="{{ $modals[$theme]['modal'] }}"
-    @if ($clickOutside) x-on:click.outside="close(id)" @endif 
+        x-on:click.outside="clickOutsideFn()" 
         x-show="state"
-        @if(!$no_animation)
-            x-transition:enter="{{ "$animationEnter $duration" }}"
-            x-transition:leave="{{ "$animationLeave $duration" }}"
-        @endif 
+        {!! $transitionEnter !!}
+        {!! $transitionLeave !!}
         {{ $attributes }}>
         {{ $slot }}
     </div>
 </section>
-
-
-@pushOnce('stm-scripts')
-    <script>
-        function modalFn(id, config) {
-            return {
-                id: id,
-                state: config.state,
-                init() {
-                    $stm.register(this);
-                },
-                open(id = '') {
-                    if (id) {
-                        this.state = (this.id == id);
-                    } else {
-                        this.state = true;
-                    }
-                },
-                close(id = '') {
-                    if (id) {
-                        this.id == id ? this.state = false : '';
-                    } else {
-                        this.state = false;
-                    }
-                },
-                toggle(id = '') {
-                    if (id) {
-                        this.id == id ? this.state = !this.state : '';
-                    } else {
-                        this.state = !this.state;
-                    }
-                },
-                getState() {
-                    return this.state;
-                },
-                getId() {
-                    return this.id;
-                }
-            }
-        }
-    </script>
-@endPushOnce

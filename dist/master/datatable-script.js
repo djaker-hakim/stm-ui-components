@@ -34,8 +34,10 @@ window.$stm.dataTable = (id, data, config) => {
         setConfig(config){
             this.table = $stm.component(config.tableId);
             this.pageControl.paginate = !(config.pagination == 'none')
-            this.pagination = this.pageControl.paginate ? $stm.component(config.paginationId) : null;
-            this.pageControl.perPage = Number(Object.keys(config.navigation.perPageOptions)[0]);
+            if(this.pageControl.paginate){
+                this.pagination = $stm.component(config.paginationId);
+                this.pageControl.perPage = Number(Object.keys(config.navigation.perPageOptions)[0]);
+            }
         },                
         toggleHeaders(key){
             headers = new Map(Object.entries(this.headers));

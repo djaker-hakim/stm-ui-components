@@ -85,7 +85,7 @@
     <aside x-data="$stm.sideBar('{{ $id }}', @js($config))" class="{{ $sidebars[$theme]['container'] }}" id="{{ $id }}"
         x-cloak
         :class="state ? '{{ $maxWidthClass }}' : '{{ "md:$minWidthClass w-0" }}'"
-        @if ($clickOutside) x-on:click.outside="if(window.innerWidth < breakpoint.width) close(id)" @endif
+        x-on:click.outside="clickOutsideFn()"
         x-on:resize.window ="checkSize()" x-on:open-sidebar.window="open($event.detail.id)"
         x-on:close-sidebar.window="close($event.detail.id)" x-on:toggle-sidebar.window="toggle($event.detail.id)"
         {{ $attributes }}>

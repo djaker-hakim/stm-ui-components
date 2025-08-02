@@ -50,6 +50,8 @@ $alertClass = $config['style']['alertClass'];
 $config['animation'] ??= [];
 
 $no_animation = ($config['animation'] == 'none');
+$transitionEnter = "";
+$transitionLeave = "";
 if(!$no_animation){
     $config['animation'] = []; // if other value then 'none'
     $config['animation']['enter'] ??= 'fadeInDown';
@@ -59,6 +61,9 @@ if(!$no_animation){
     $animationEnter = 'animate__animated animate__'.$config['animation']['enter'];
     $animationLeave = 'animate__animated animate__'.$config['animation']['leave'];
     $duration = '[--animate-duration:'.$config['animation']['duration'].']';
+
+    $transitionEnter = "x-transition:enter='$animationEnter $duration'";
+    $transitionLeave = "x-transition:leave='$animationLeave $duration'";
 }
 
 $id = Stm::id($id, 'alert-');
@@ -97,10 +102,8 @@ $theme = array_key_exists($theme, $alerts) ? $theme : 'standard'; // theme fallb
     :class="{ 'bg-[#fccaca]': mode == 'error', 'bg-[#e6f7ff]': mode == 'info', 'bg-[#fcedca]': mode == 'warning', 'bg-[#c7fccb]': mode == 'success' }"
     x-data="$stm.alert(@js($id), @js($config))"
     x-show="state"
-    @if(!$no_animation)
-        x-transition:enter="{{ "$animationEnter $duration" }}"
-        x-transition:leave="{{ "$animationLeave $duration" }}"
-    @endif
+    {!! $transitionEnter !!}
+    {!! $transitionLeave !!}
     x-cloak
     x-on:open-alert.window="open($event.detail.id)"
     x-on:close-alert.window="close($event.detail.id)" 
