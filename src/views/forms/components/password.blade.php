@@ -54,11 +54,11 @@ if(!array_key_exists($size, $sizes)) $size = 'md';
 $standard = 'disabled:opacity-60 disabled:bg-[var(--stm-color-muted)] disabled:cursor-not-allowed';
 $passwordInputs = [
     'standard' => [
-        'input' => "block w-full bg-[var(--stm-color-bg-2)] rounded-md focus:bg-[var(--stm-color-bg-2)] focus:outline-0 focus:border-[$color] border border-transparent invalid:border-[--stm-color-danger] invalid:focus:border-[--stm-color-danger] transition-colors $standard $sizes[$size] $class",
+        'input' => "block w-full bg-[var(--stm-color-bg-2)] rounded-md focus:bg-[var(--stm-color-bg-2)] focus:outline-0 focus:border-[$color] border border-transparent invalid:border-[var(--stm-color-danger)] invalid:focus:border-[var(--stm-color-danger)] transition-colors $standard $sizes[$size] $class",
         'icon' => "absolute top-1/2 right-2 -translate-y-1/2 fill-[var(--stm-color-muted)] $iconSizes[$size] $iconClass"
     ],
     'stm' => [
-        'input' => "block w-full border-b border-slate-300 bg-[var(--stm-color-bg-2)] focus:outline-none focus:[border-color:$color] invalid:focus:border-[--stm-color-danger] invalid:border-[--stm-color-danger] transition-colors $standard $sizes[$size] $class",
+        'input' => "block w-full border-b border-slate-300 bg-[var(--stm-color-bg-2)] focus:outline-none focus:[border-color:$color] invalid:focus:border-[var(--stm-color-danger)] invalid:border-[var(--stm-color-danger)] transition-colors $standard $sizes[$size] $class",
         'icon' => "absolute top-1/2 right-2 -translate-y-1/2 fill-[var(--stm-color-muted)] $iconSizes[$size] $iconClass"
     ],
     'custom' => [
