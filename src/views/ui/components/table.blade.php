@@ -48,6 +48,7 @@ use stm\UIcomponents\Support\Color;
 
 
     // Default Config Values
+    $config['loading'] ??= false;
     $config['sortable'] ??= true;
     $config['selectable'] ??= false;
     $config['selectAllBtn'] ??= true;
@@ -230,14 +231,14 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
         </table>
 
         {{--  No data found  --}}
-        <div class="text-center text-[var(--stm-color-muted)] text-sm p-4" x-show="rows.length === 0 && !loading && Object.keys(headers).length > 0" x-cloak>
+        <div class="text-center text-[var(--stm-color-muted)] text-sm p-4" x-show="rows.length === 0 && !load && Object.keys(headers).length > 0" x-cloak>
             {{ $config['emptyMessage'] }}
         </div>
         @isset($loader)
             {{ $loader }} 
         @else
             {{-- loader --}}
-            <div class="flex justify-center items-center p-4" x-show="loading" x-cloak>
+            <div class="flex justify-center items-center p-4" x-show="load" x-cloak>
                 <x-stm::spinner :theme="$theme" :color="$backgroundColor" />
             </div>
         @endisset
@@ -307,14 +308,14 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
         </tbody>  
     </table>
     {{--  No data found  --}}
-    <div class="text-center text-[var(--stm-color-muted)] text-sm p-4" x-show="rows.length === 0 && !loading && Object.keys(headers).length > 0" x-cloak>
+    <div class="text-center text-[var(--stm-color-muted)] text-sm p-4" x-show="rows.length === 0 && !load && Object.keys(headers).length > 0" x-cloak>
         {{ $config['emptyMessage'] }}
     </div>
     @isset($loader)
         {{ $loader }} 
     @else
         {{-- loader --}}
-        <div class="flex justify-center items-center p-4" x-show="loading" x-cloak>
+        <div class="flex justify-center items-center p-4" x-show="load" x-cloak>
             <x-stm::spinner :theme="$theme" :color="$backgroundColor" />
         </div>
     @endisset

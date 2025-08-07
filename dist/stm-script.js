@@ -15,6 +15,9 @@ window.$stm = {
     component(id) {
         return this.list.find(item => item.id == id)
     },
+    get(id){
+        return this.component(id);
+    },
     allComponents() {
         return this.list
     },

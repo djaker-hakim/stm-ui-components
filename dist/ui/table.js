@@ -4,7 +4,7 @@ window.$stm.table = (id, data, config) => {
         type: 'table',
         rows: [],
         selection: [],
-        loading: false,
+        load: false,
         selectable: false,
         selectAllBtn: null,
         sortable: true,
@@ -16,6 +16,7 @@ window.$stm.table = (id, data, config) => {
             this.selectable = config.selectable;
             this.selectAllBtn = config.selectAllBtn;
             this.sortable = config.sortable;
+            this.loading(config.loading);
             this.setupData(data);
             $stm.register(this);
         },
@@ -105,6 +106,9 @@ window.$stm.table = (id, data, config) => {
                     }
                 }
             );
+        },
+        loading(state = true){
+            this.load = state;
         }
     }
 }

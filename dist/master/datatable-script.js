@@ -24,7 +24,7 @@ window.$stm.dataTable = (id, data, config) => {
         },
         init(){
             this.$nextTick(() => {
-                this.setData(data);
+                this.setInitData(data);
                 this.setConfig(config);
                 this.setColumns();
                 this.setFinalData();
@@ -94,7 +94,6 @@ window.$stm.dataTable = (id, data, config) => {
             this.table.setHeaders(headers);
             this.headers = this.table.headers;  
         },
-
         searchBy(text, filters){
             if(text == '') return this.allRows;
             let rows = this.allRows.filter((row) => {
@@ -107,8 +106,13 @@ window.$stm.dataTable = (id, data, config) => {
             this.allRows = rows;
             return rows;
         },
+        setInitData(rows){
+            this.data = rows;
+        },
         setData(rows){
             this.data = rows;
+            this.setColumns();
+            this.setFinalData();
         },
         paginate(page){
             const control = this.pageControl;
@@ -145,6 +149,9 @@ window.$stm.dataTable = (id, data, config) => {
             number = Number(number)
             this.pageControl.perPage = isNaN(number) ? 10 : number ;
             this.setFinalData();
+        },
+        loading(state = true){
+            this.table.loading(state);
         },
     }
 }
