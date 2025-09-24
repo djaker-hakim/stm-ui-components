@@ -16,47 +16,47 @@
     'theme' => '',
     'color' => 'var(--stm-color-bg-1)',
     'backgroundColor' => 'var(--stm-color-accent)',
-    'data', 
-    'config' => []
+    'data',
+    'config' => [],
 ])
 
 @php
-use stm\UIcomponents\Support\Stm;
-use stm\UIcomponents\Support\Color;
+    use stm\UIcomponents\Support\Stm;
+    use stm\UIcomponents\Support\Color;
 
-// default values
-$config['style']['tabClass'] ??= '';
-$config['style']['activeTabClass'] ??= '';
-$config['style']['containerClass'] ??= '';
+    // default values
+    $config['style']['tabClass'] ??= '';
+    $config['style']['activeTabClass'] ??= '';
+    $config['style']['containerClass'] ??= '';
 
-// varibalse from config
-extract($config['style']);
+    // varibalse from config
+    extract($config['style']);
 
-$id = Stm::id($id, 'tabs-');
+    $id = Stm::id($id, 'tabs-');
 
-$color = Color::colorToSnake($color);
-$backgroundColor = Color::colorToSnake($backgroundColor);
-    
-$tabs=[
-    'standard' => [
-        'tab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-color-muted)] $tabClass",
-        'activeTab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center text-[$color] bg-[$backgroundColor] $activeTabClass",
-        'container' => "$containerClass",
-    ],
-    'stm' =>[
-        'tab' => "inline-block px-4 py-3 cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-color-muted)] $tabClass",
-        'activeTab' => "inline-block px-4 py-3 cursor-pointer text-center text-[$backgroundColor] bg-[$color] border-b-2 border-[$backgroundColor] $activeTabClass",
-        'container' => "$containerClass",
-    ],
-    'custom' => [
-        'tab' => $tabClass,
-        'activeTab' => $activeTabClass,
-        'container' => $containerClass
-    ]
-];
+    $color = Color::colorToSnake($color);
+    $backgroundColor = Color::colorToSnake($backgroundColor);
 
-$theme = $theme ? $theme : Stm::styles()->theme;
-$theme = array_key_exists($theme, $tabs) ? $theme : 'standard'; // theme fallback value
+    $tabs = [
+        'standard' => [
+            'tab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-color-muted)] $tabClass",
+            'activeTab' => "inline-block px-4 py-3 rounded-t-lg cursor-pointer text-center text-[$color] bg-[$backgroundColor] $activeTabClass",
+            'container' => "$containerClass",
+        ],
+        'stm' => [
+            'tab' => "inline-block px-4 py-3 cursor-pointer text-center hover:text-gray-900 hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent disabled:text-[var(--stm-color-muted)] disabled:cursor-not-allowed disabled:hover:text-[var(--stm-color-muted)] $tabClass",
+            'activeTab' => "inline-block px-4 py-3 cursor-pointer text-center text-[$backgroundColor] bg-[$color] border-b-2 border-[$backgroundColor] $activeTabClass",
+            'container' => "$containerClass",
+        ],
+        'custom' => [
+            'tab' => $tabClass,
+            'activeTab' => $activeTabClass,
+            'container' => $containerClass,
+        ],
+    ];
+
+    $theme = $theme ? $theme : Stm::styles()->theme;
+    $theme = array_key_exists($theme, $tabs) ? $theme : 'standard'; // theme fallback value
 @endphp
 
 
@@ -65,7 +65,9 @@ $theme = array_key_exists($theme, $tabs) ? $theme : 'standard'; // theme fallbac
 <section :id="id" x-data="$stm.tabs(@js($id), @js($data), @js($config))" {{ $attributes }}>
     <div class="flex w-full overflow-x-auto space-x-2">
         <template x-for="(tab, index) in tabs" :key="'tab-' + index">
-            <button type="button" :class="activeTab == tab.value ? '{{ $tabs[$theme]["activeTab"] }}' : '{{ $tabs[$theme]["tab"]}}'" x-on:click="activate(tab.value)" :disabled="!!tab.disabled" x-html="tab.lable">
+            <button type="button"
+                :class="activeTab == tab.value ? '{{ $tabs[$theme]['activeTab'] }}' : '{{ $tabs[$theme]['tab'] }}'"
+                x-on:click="activate(tab.value)" :disabled="!!tab.disabled" x-html="tab.label">
             </button>
         </template>
     </div>
@@ -74,4 +76,3 @@ $theme = array_key_exists($theme, $tabs) ? $theme : 'standard'; // theme fallbac
         {{ $slot }}
     </div>
 </section>
-
