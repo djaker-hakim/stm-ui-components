@@ -100,7 +100,7 @@ $lightColor = Color::colorToSnake($lightColor);
     $sticky = $config['table']['style']['stickyHeader'] ? "sticky top-0 z-10" : '';
     $hover = $config['table']['style']['hoverable'] ? "hover:bg-[$lightColor] cursor-pointer" : '';
     $striped = $config['table']['style']['striped'] ? "even:bg-[$lightColor]" : '';
-    $bordered = $config['table']['style']['bordered'] ? "border-b border-gray-300" : '';
+    $bordered = $config['table']['style']['bordered'] ? "border border-gray-300" : '';
     $view = $config['view'];
     $tableResClass = $view == 'auto' ? 'md:block hidden' : '' ;   
     $mTableResClass = $view == 'auto' ? 'md:hidden block' : '' ;   
@@ -217,7 +217,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
                             <x-stm::checkbox :theme="$theme" :color="$backgroundColor" ::checked="selection.includes(row)" x-on:click.stop="true" x-on:change="select(row)" />
                         </td>
                         <template x-for="(header, key) in headers" :key="'row' + key">
-                            <td class="{{ $tables[$theme]['td'] }}" x-text="row[key]"></td>
+                            <td class="{{ $tables[$theme]['td'] }}" x-html="row[key]"></td>
                         </template>
                         @isset($action)
                             <td class="{{ $tables[$theme]['td'] }}">
@@ -292,7 +292,7 @@ $theme = array_key_exists($theme, $tables) ? $theme : 'standard'; // theme fallb
                             <template x-for="(header, key) in headers" :key="'header' + key">
                                 <div class="{{ $mTables[$theme]['card'] }}">
                                     <span class="{{ $mTables[$theme]['ch'] }}" x-text="header+':'"></span>
-                                    <span class="{{ $mTables[$theme]['cd'] }}" x-text="row[key]"></span>
+                                    <span class="{{ $mTables[$theme]['cd'] }}" x-html="row[key]"></span>
                                 </div>
                             </template>
                             @isset($action)

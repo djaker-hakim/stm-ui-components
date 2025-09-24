@@ -99,7 +99,12 @@ window.$stm.dataTable = (id, data, config) => {
             let rows = this.allRows.filter((row) => {
                 let status = false;
                 for (key in filters) {
-                    status ||= row[key].toString().toLowerCase().indexOf(text.trim().toLowerCase()) != -1;
+                    console.log('datatable null');
+                    if(row[key] === null){
+                        status ||= false
+                    }else{
+                        status ||= row[key].toString().toLowerCase().indexOf(text.trim().toLowerCase()) != -1;
+                    }
                 }
                 return status;
             }); 
