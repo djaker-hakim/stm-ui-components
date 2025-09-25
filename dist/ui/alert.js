@@ -10,6 +10,9 @@ window.$stm.alert = (id, config) => {
         mode: config.mode,
         init() {
             $stm.register(this);
+            window.addEventListener('open-alert', (e) => this.open(e.detail.id));
+            window.addEventListener('close-alert', (e) => this.close(e.detail.id));
+            window.addEventListener('toggle-alert', (e) => this.toggle(e.detail.id));
         },
         setContent(content, mode){
             this.mode = mode;

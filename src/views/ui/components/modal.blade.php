@@ -105,9 +105,7 @@ $theme = array_key_exists($theme, $modals) ? $theme : 'standard'; // theme fallb
 x-data="$stm.modal(@js($id), @js($config))" 
 x-show="state" 
 x-cloak 
-x-on:open-modal.window="open($event.detail.id)"
-x-on:close-modal.window="close($event.detail.id)" 
-x-on:toggle-modal.window="toggle($event.detail.id)">
+>
     <div class="{{ $modals[$theme]['modal'] }}"
         x-on:click.outside="clickOutsideFn()" 
         x-show="state"

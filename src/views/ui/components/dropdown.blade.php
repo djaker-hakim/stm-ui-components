@@ -90,9 +90,6 @@ $theme = array_key_exists($theme, $dropdowns) ? $theme : 'standard'; // theme fa
     :id="id" 
     class="{{ $dropdowns[$theme] }}"
     x-on:click.outside="clickOutsideFn()"
-    x-on:open-dropdown.window="open($event.detail.id)"
-    x-on:close-dropdown.window="close($event.detail.id)" 
-    x-on:toggle-dropdown.window="toggle($event.detail.id)"
     x-cloak 
     x-show="state"
     {!! $transitionEnter !!}

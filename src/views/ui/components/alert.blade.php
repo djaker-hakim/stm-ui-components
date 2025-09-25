@@ -105,9 +105,6 @@ $theme = array_key_exists($theme, $alerts) ? $theme : 'standard'; // theme fallb
     {!! $transitionEnter !!}
     {!! $transitionLeave !!}
     x-cloak
-    x-on:open-alert.window="open($event.detail.id)"
-    x-on:close-alert.window="close($event.detail.id)" 
-    x-on:toggle-alert.window="toggle($event.detail.id)"
     {{$attributes}}>
     
     <div class="{{ $alerts[$theme]['alert'] }}" x-html="content"></div>
@@ -124,6 +121,5 @@ $theme = array_key_exists($theme, $alerts) ? $theme : 'standard'; // theme fallb
             </span>
         </button>
     </div>
-    
 </section>
 

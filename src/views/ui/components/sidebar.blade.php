@@ -86,8 +86,6 @@
         x-cloak
         :class="state ? '{{ $maxWidthClass }}' : '{{ "md:$minWidthClass w-0" }}'"
         x-on:click.outside="clickOutsideFn()"
-        x-on:resize.window ="checkSize()" x-on:open-sidebar.window="open($event.detail.id)"
-        x-on:close-sidebar.window="close($event.detail.id)" x-on:toggle-sidebar.window="toggle($event.detail.id)"
         {{ $attributes }}>
         <div class="side">
             {{ $slot }}

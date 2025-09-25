@@ -9,7 +9,12 @@ window.$stm.sideBar = (id, config) => {
         breakpoint: config.breakpoint,
         init(){
             $stm.register(this);
+            window.addEventListener('open-sidebar', (e) => this.open(e.detail.id));
+            window.addEventListener('close-sidebar', (e) => this.close(e.detail.id));
+            window.addEventListener('toggle-sidebar', (e) => this.toggle(e.detail.id));
             this.checkSize();
+            window.addEventListener('resize', (e) => this.checkSize());
+
         },
         checkSize()
         {
