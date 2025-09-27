@@ -1,6 +1,9 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
+
 window.$stm.pagination = (id, config) =>
 {
     return {
+        ...stmInitTrait,
         id: id,
         currentPage: config.currentPage,
         totalPages: config.pages,
@@ -9,7 +12,7 @@ window.$stm.pagination = (id, config) =>
         end: null,
         limit: config.limit,
         init(){
-            $stm.register(this);
+            this.stmInit();
             this.visiblePages();
         },
         next(){

@@ -1,12 +1,15 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
+
 window.$stm.password = (id, config) =>
 {
     return {
+        ...stmInitTrait,
         id: id,
         type: 'password',
         state: config.state,
         showButton: config.showButton,
         init(){
-            $stm.register(this);
+            this.stmInit();
         },
         show(){
             this.state = true;

@@ -94,7 +94,7 @@
 @endphp
 
 
-<div x-data="$stm.dataTable(@js($id), @js($data), @js($config))">
+<div x-data="$stm.dataTable(@js($id), @js($data), @js($config))" {{ $attributes }}>
     @if(!$no_navigation)
         <section class="py-4 flex flex-wrap justify-end items-center gap-2 md:max-w-full max-w-[280px]">
             @if($searchable)

@@ -1,6 +1,8 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
 
 window.$stm.dataTable = (id, data, config) => {
     return {
+        ...stmInitTrait,
         id: id,
         type:'datatable',
         data: null,
@@ -28,7 +30,7 @@ window.$stm.dataTable = (id, data, config) => {
                 this.setConfig(config);
                 this.setColumns();
                 this.setFinalData();
-                $stm.register(this);
+                this.stmInit();
             });
         },
         setConfig(config){

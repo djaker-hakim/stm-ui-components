@@ -1,17 +1,19 @@
 import { stateTrait } from '../traits/stateTrait'
+import { stmInitTrait } from "../traits/stmInitTrait"; 
 
 window.$stm.sideBar = (id, config) => {
     return {
+        ...stmInitTrait,
         id: id,
         type:'sidebar',
         state: config.state,
         ...stateTrait,
         breakpoint: config.breakpoint,
         init(){
-            $stm.register(this);
-            window.addEventListener('open-sidebar', (e) => this.open(e.detail.id));
-            window.addEventListener('close-sidebar', (e) => this.close(e.detail.id));
-            window.addEventListener('toggle-sidebar', (e) => this.toggle(e.detail.id));
+            this.stmInit();
+            window.addEventListener('open-sidebar', (e) => this.open(e.detail));
+            window.addEventListener('close-sidebar', (e) => this.close(e.detail));
+            window.addEventListener('toggle-sidebar', (e) => this.toggle(e.detail));
             this.checkSize();
             window.addEventListener('resize', (e) => this.checkSize());
 

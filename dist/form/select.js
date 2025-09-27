@@ -1,12 +1,15 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
+
 window.$stm.select = (id, options, selected = '') =>
 {
     return {
+        ...stmInitTrait,
         id: id,
         type: 'select',
         options: [],
         selected: '',
         init() {
-            $stm.register(this)
+            this.stmInit();
             this.options = options;
             selected ? this.selected = selected : '';
         },

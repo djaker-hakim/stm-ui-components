@@ -1,5 +1,7 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
 window.$stm.table = (id, data, config) => {
     return {
+        ...stmInitTrait,
         id: id,
         type: 'table',
         rows: [],
@@ -18,7 +20,7 @@ window.$stm.table = (id, data, config) => {
             this.sortable = config.sortable;
             this.loading(config.loading);
             this.setupData(data);
-            $stm.register(this);
+            this.stmInit();
         },
         setupData(rows){
             this.setDefaultHeaders(rows);

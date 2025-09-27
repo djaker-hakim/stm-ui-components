@@ -1,10 +1,13 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
+
 window.$stm.error = (id, message) =>
 {
     return {
+        ...stmInitTrait,
         id: id,
         message: message,
         init(){
-            $stm.register(this);
+            this.stmInit();
         },
         setMessage(message){
             this.message = message;

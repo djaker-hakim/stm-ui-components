@@ -1,10 +1,12 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
 window.$stm.tabs = (id, data, config = []) => {
   return {
+    ...stmInitTrait,
     id: id,
     tabs: data, // array of object label, value, target, disabled
     activeTab: "",
     init() {
-      $stm.register(this);
+      this.stmInit();
       this.$watch("activeTab", (value) => {
         this.tabs.forEach((tab) => {
           if (tab.value == this.activeTab) {

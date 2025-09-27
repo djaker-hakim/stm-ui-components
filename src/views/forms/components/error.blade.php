@@ -47,4 +47,4 @@ $theme = array_key_exists($theme, $errs) ? $theme : 'standard'; // theme fallbac
 
 
 
-<div class="{{ $errs[$theme] }}" x-data="$stm.error(@js($id), @js($message))" x-text="message"></div>
+<div class="{{ $errs[$theme] }}" x-data="$stm.error(@js($id), @js($message))" x-text="message" {{ $attributes }}></div>

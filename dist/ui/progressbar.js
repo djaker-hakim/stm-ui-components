@@ -1,5 +1,8 @@
+import { stmInitTrait } from "../traits/stmInitTrait"; 
+
 window.$stm.progressBar = (id, config) => {
     return {
+        ...stmInitTrait,
         id: id,
         type: 'progressbar',
         lable:'',
@@ -9,7 +12,7 @@ window.$stm.progressBar = (id, config) => {
         duration: config.duration,
         interval: null,
         init(){
-            $stm.register(this);
+            this.stmInit();
             this.setProgress(config.progress);
         },
         validateProgress(value){

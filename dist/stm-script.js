@@ -15,23 +15,29 @@ window.$stm = {
     component(id) {
         return this.list.find(item => item.id == id)
     },
-    get(id){
-        return this.component(id);
+    ref(ref){
+        if(ref == "") return;
+        return this.list.find(item => item.ref == ref)
+    },
+    get(idOrRef){
+        if(this.component(idOrRef)) return this.component(idOrRef);
+        if(this.ref(idOrRef)) return this.ref(idOrRef);
+        return undefined;
     },
     allComponents() {
         return this.list
     },
     open(id){
-        this.component(id).open();
+        this.get(id).open();
     },
     close(id){
-        this.component(id).close();
+        this.get(id).close();
     },
     toggle(id){
-        this.component(id).toggle();
+        this.get(id).toggle();
     },
     getState(id){
-        return this.component(id).state;
+        return this.get(id).state;
     },
 };
 

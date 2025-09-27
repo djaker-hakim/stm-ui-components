@@ -1,7 +1,9 @@
 import { stateTrait } from "../traits/stateTrait";
+import { stmInitTrait } from "../traits/stmInitTrait"; 
 
 window.$stm.alert = (id, config) => {
     return {
+        ...stmInitTrait,
         id: id,
         type: 'alert',
         state: config.state,
@@ -9,10 +11,10 @@ window.$stm.alert = (id, config) => {
         content: config.content,
         mode: config.mode,
         init() {
-            $stm.register(this);
-            window.addEventListener('open-alert', (e) => this.open(e.detail.id));
-            window.addEventListener('close-alert', (e) => this.close(e.detail.id));
-            window.addEventListener('toggle-alert', (e) => this.toggle(e.detail.id));
+            this.stmInit();
+            window.addEventListener('open-alert', (e) => this.open(e.detail));
+            window.addEventListener('close-alert', (e) => this.close(e.detail));
+            window.addEventListener('toggle-alert', (e) => this.toggle(e.detail));
         },
         setContent(content, mode){
             this.mode = mode;
