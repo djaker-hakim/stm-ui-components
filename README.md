@@ -690,10 +690,17 @@ The `<x-stm::select>` component renders a styled dropdown (select input) with th
 
 ## API Methods
 
-You can retrieve the currently selected value via JavaScript using:
+You can set and get the options and selected value via JavaScript using:
 
-### `getSelected()`
-Returns the value of the selected option.
+### `options`
+accepts a object of key value pair e.g. `{ value: "label", value1: "label1"}`
+
+### `selected`
+you can set the default selected value with this property.
+
+### `getSelection()`
+you can get the currentlly selected value with this method.
+
 
 ```blade
 <x-stm::select 

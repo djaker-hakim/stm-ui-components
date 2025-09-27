@@ -10,12 +10,8 @@ window.$stm.select = (id, options, selected = '') =>
             this.options = options;
             selected ? this.selected = selected : '';
         },
-        getSelected(){
-            return this.selected;
-        },
-        getId(){
-            return this.id;
+        getSelection(){
+            return this.$root.value; 
         }
-
     }
 }
