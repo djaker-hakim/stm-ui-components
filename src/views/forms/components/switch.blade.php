@@ -10,6 +10,7 @@
     'theme' => '',
     'size' => 'md',
     'color' => 'var(--stm-color-accent)',
+    'class' => '',
     'config' => [
         'style' => [
             'containerClass' => '',
@@ -44,12 +45,12 @@ $switches = [
     'standard' => [
         'container' => "relative inline-block w-[". $sizes[$size] * 2 ."px] h-[$sizes[$size]px] $containerClass",
         'lable' => "absolute top-0 left-0 size-[$sizes[$size]px] bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-200 peer-checked:translate-x-[$sizes[$size]px] peer-checked:border-[$color] cursor-pointer peer-disabled:opacity-60 peer-disabled:cursor-not-allowed $lableClass",
-        'input' => "peer appearance-none w-[". $sizes[$size] * 2 ."px] h-[$sizes[$size]px] bg-[var(--stm-color-muted)] rounded-full checked:bg-[$color] cursor-pointer transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+        'input' => "peer appearance-none w-[". $sizes[$size] * 2 ."px] h-[$sizes[$size]px] bg-[var(--stm-color-muted)] rounded-full checked:bg-[$color] cursor-pointer transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed $inputClass $class"
     ],
     'custom' => [
         'container' => $containerClass,
         'lable' => $lableClass,
-        'input' => $inputClass
+        'input' => "$inputClass $class"
     ]
 ];
 
