@@ -39,6 +39,10 @@ window.$stm = {
     getState(id){
         return this.get(id).state;
     },
+    resetAllErrors(){
+        const errors = this.list.filter(item => item.type == 'error');
+        errors.forEach(error => error.reset());
+    }
 };
 
 

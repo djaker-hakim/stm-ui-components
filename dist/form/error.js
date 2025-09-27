@@ -5,6 +5,7 @@ window.$stm.error = (id, message) =>
     return {
         ...stmInitTrait,
         id: id,
+        type: 'error',
         message: message,
         init(){
             this.stmInit();
